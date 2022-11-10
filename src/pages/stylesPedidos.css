@@ -1,0 +1,40 @@
+
+.btnCrearMenu
+{
+    width: 30%;     
+    border-radius: 1rem;
+    padding: 1.5%;
+    border: none;
+    cursor: pointer;
+    margin: 20px 70px;
+    color: #fff;
+    background-color: #0062cc;
+}
+
+.botones {
+  margin: 5% 40%;
+}
+
+/* .cards{
+  height: 300px;
+} */
+
+.carrito{
+  text-align: center;  
+  margin-bottom: 10%;
+  height: 80%;
+}
+.btnpedido
+{
+    width: 30%;  
+    border-radius: 1rem;
+    padding: 1.5%;
+    border: none;
+    cursor: pointer;
+    margin: 0px 70px;
+    color: #fff;
+    background-color: #0062cc;
+}
+.container{
+  text-align: center;
+}
