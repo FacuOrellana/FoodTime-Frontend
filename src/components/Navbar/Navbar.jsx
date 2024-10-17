@@ -5,7 +5,7 @@ export const Navbar = () => {
     let location = useLocation();
 
     return (
-        <div className="navbar navbar-dark bg-dark mb-4 px-4">
+        <div className="navbar navbar-dark bg-dark px-4">
 
             <span className="navbar-brand">
                 <i className="fas fa-duotone fa-clipboard-user me-2"></i>

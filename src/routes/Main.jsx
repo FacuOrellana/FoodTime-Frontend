@@ -1,43 +1,41 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Navbar } from '../components/Navbar/Navbar';
-import { Carrito } from '../pages/Carrito';
-import { CrearMenu } from '../pages/ConfiguracionMenus/CrearMenu';
-import { EditarMenu } from '../pages/ConfiguracionMenus/EditarMenu';
-import { GestionarMenus } from '../pages/ConfiguracionMenus/GestionarMenus';
-import { ListarPedidos } from '../pages/ListadoPedidos/ListarPedidos';
-import { ResumenPedido } from '../pages/ListadoPedidos/ResumenPedido';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Carrito } from "../pages/Carrito";
+import { CrearMenu } from "../pages/ConfiguracionMenus/CrearMenu";
+import { EditarMenu } from "../pages/ConfiguracionMenus/EditarMenu";
+import { GestionarMenus } from "../pages/ConfiguracionMenus/GestionarMenus";
+import { ListarPedidos } from "../pages/ListadoPedidos/ListarPedidos";
+import { ResumenPedido } from "../pages/ListadoPedidos/ResumenPedido";
+import NavbarLayout from "../components/Navbar/NavbarLayout";
+import Login from "../pages/Login";
 
 /* PAGES */
 
-import { PedidosPage } from '../pages/PedidosPage';
-import { RealizarPedido } from '../pages/RealizarPedido';
+import { PedidosPage } from "../pages/PedidosPage";
+import { RealizarPedido } from "../pages/RealizarPedido";
 
 export const Main = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Rutas que no utilizan NavbarLayout */}
+        <Route path="/login" element={<Login />} />
 
-    return (
-        <BrowserRouter>
+        {/* Rutas que utilizan NavbarLayout */}
+        <Route element={<NavbarLayout />}>
+          <Route path="/" element={<PedidosPage />} />
+          <Route path="/RealizarPedido" element={<RealizarPedido />} />
+          <Route path="/RealizarPedido/Carrito" element={<Carrito />} />
 
-            <Navbar />
+          {/* GESTION DE PEDIDOS */}
+          <Route path="/ListarPedido" element={<ListarPedidos />} />
+          <Route path="/ListarPedido/:id" element={<ResumenPedido />} />
 
-            <Routes>
-
-                <Route path='/' element={<PedidosPage />}></Route>
-                <Route exact path='/RealizarPedido' element={<RealizarPedido />} />
-                <Route exact path='/RealizarPedido/Carrito' element={<Carrito />} />
-
-                {/* GESTION DE PEDIDOS */}
-
-                <Route exact path='/ListarPedido' element={<ListarPedidos />} />
-                <Route exact path='/ListarPedido/:id' element={<ResumenPedido />} />
-
-                {/* GESTION DE MENUS */}
-
-                <Route exact path='/GestionarMenus' element={<GestionarMenus />} />
-                <Route exact path='/GestionarMenus/Crear' element={<CrearMenu />} />
-                <Route exact path='/GestionarMenus/:id' element={<EditarMenu />} />
-
-            </Routes>
-
-        </BrowserRouter>
-    )
-}
+          {/* GESTION DE MENUS */}
+          <Route path="/GestionarMenus" element={<GestionarMenus />} />
+          <Route path="/GestionarMenus/Crear" element={<CrearMenu />} />
+          <Route path="/GestionarMenus/:id" element={<EditarMenu />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
