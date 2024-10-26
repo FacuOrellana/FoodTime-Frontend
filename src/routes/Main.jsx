@@ -18,11 +18,12 @@ export const Main = () => {
     <BrowserRouter>
       <Routes>
         {/* Rutas que no utilizan NavbarLayout */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />                
+        <Route path="/" element={<Login />} />
 
         {/* Rutas que utilizan NavbarLayout */}
         <Route element={<NavbarLayout />}>
-          <Route path="/" element={<PedidosPage />} />
+          <Route path="/pedidos" element={<PedidosPage />} />
           <Route path="/RealizarPedido" element={<RealizarPedido />} />
           <Route path="/RealizarPedido/Carrito" element={<Carrito />} />
 

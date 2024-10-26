@@ -4,7 +4,7 @@ import { rootApiRoute } from "./GlobalApiConfig";
 
 export const getAllMenusApiCall = async () => {
     try {
-        const response = await axios.get(rootApiRoute + "/GestionarMenus/all");
+        const response = await axios.get(rootApiRoute + "/menus");
         return response.data;
     } catch (error) {
         throw error;

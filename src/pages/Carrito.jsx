@@ -19,17 +19,6 @@ export const Carrito = ({ history }) => {
     setTotalArticulos(getTotalArticulos(carritoCompras));
     let menuItems = localStorage.getItem("lineaPedido") || "[]";
     menuItems = JSON.parse(menuItems);
-    // let tipoPedido = []
-    // menuItems.forEach((pedido) => {if(!tipoPedido.includes(pedido.name) {
-    //     tipoPedido.push(pedido)
-    // }
-    //     else{
-    //         let incluyen = menuItems.filter((incluye) => {
-    //             incluye.titulo===pedido.titulo
-    //     }
-    //     let cantidadfinalincluyen[0] =
-    //     )}
-    // ) })
     let articulosTotales = 0;
     let total = 0;
     menuItems.forEach((item) => {
@@ -42,8 +31,6 @@ export const Carrito = ({ history }) => {
   }, []);
 
   const confirmOrderCarrito = () => {
-    console.log("Se disparó xdxd")
-    //let date = new Date(Date.now().getTime() + 30 * 60000);
     let menuItems = localStorage.getItem("lineaPedido") || "[]";
     menuItems = JSON.parse(menuItems);
     

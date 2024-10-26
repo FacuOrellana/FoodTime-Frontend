@@ -5,7 +5,7 @@ import { rootApiRoute } from "./GlobalApiConfig";
 export const getAllPedidosApiCall = async () => {
     try {
         console.log("dentro de apicall")
-        const response = await axios.get(rootApiRoute + "/ListarPedido");
+        const response = await axios.get(rootApiRoute + "/pedidos");
         return response.data;
     } catch (error) {
         throw error;

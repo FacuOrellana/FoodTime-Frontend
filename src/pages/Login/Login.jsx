@@ -1,10 +1,26 @@
 import React, { useState } from "react";
+import { loginApiCall } from "../../db/usuariosApiCall";
 
 const LoginForm = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [email, setEmail] = useState(""); // Estado para el email
+  const [password, setPassword] = useState(""); // Estado para la contraseña
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const login = (e) => {
+    e.preventDefault(); // Evita que el formulario se envíe por defecto
+
+    // Mostrar los valores en consola
+    console.log("Email:", email);
+    console.log("Contraseña:", password);
+
+    var response = loginApiCall(email,password);
+    
+    console.log(response);    
+    // Aquí iría la lógica para hacer la request a la API
   };
 
   return (
@@ -40,6 +56,8 @@ const LoginForm = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
+                value={email} // Bind the input value to the state
+                onChange={(e) => setEmail(e.target.value)} // Update state on change
                 className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]"
               />
             </div>
@@ -59,6 +77,8 @@ const LoginForm = () => {
                   placeholder="Contraseña"
                   required
                   autoComplete="current-password"
+                  value={password} // Bind the input value to the state
+                  onChange={(e) => setPassword(e.target.value)} // Update state on change
                   className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]"
                 />
 
@@ -98,6 +118,7 @@ const LoginForm = () => {
               <button
                 className="ms-4 inline-flex items-center px-4 py-2 bg-[#f84525] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                 type="submit"
+                onClick={login}
               >
                 Iniciar sesión
               </button>

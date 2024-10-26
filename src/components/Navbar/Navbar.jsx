@@ -1,35 +1,40 @@
 import { Link, useLocation } from "react-router-dom";
 
 export const Navbar = () => {
+  let location = useLocation();
 
-    let location = useLocation();
+  return (
+    <div className="font-sans text-white bg-gradient-to-r from-orange-400 to-blue-600 px-4 py-3 shadow-md flex items-center justify-between">
+      {/* Logo y nombre del usuario */}
+      <span className="text-xl font-bold flex items-center">
+        <i className="fas fa-clipboard-user me-2"></i> Facundo O.
+      </span>
+      
+      {/* Grupo de botones alineado a la derecha */}
+      <div className="flex space-x-4">
+        {/* Botón de Inicio */}
+        <Link
+          to={'/pedidos'}
+          className="bg-gradient-to-r from-blue-400 to-cyan-500 hover:from-cyan-500 hover:to-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition-all duration-300"
+        >
+          <i className="fas fa-home me-2"></i> Inicio
+        </Link>
 
-    return (
-        <div className="navbar navbar-dark bg-dark px-4">
-
-            <span className="navbar-brand">
-                <i className="fas fa-duotone fa-clipboard-user me-2"></i>
-                Sebastian E.
-            </span>
-            <div className="SS">
-                <Link to={'/'} className="btn btn-secondary" >
-                    <i className="fas fa-yin-yang me-2"></i>
-                    <span>Inicio</span>
-                </Link>
-            </div>
-
-            {location.pathname !== "/RealizarPedido/Carrito" && (
-                <Link to={'/RealizarPedido/Carrito'} className="btn btn-secondary">
-                    <i className="fas fa-shopping-cart me-2"></i>
-                    <span>Carrito</span>
-                </Link>
-            )}
-
-            <button className="btn btn-outline-danger" >
-                <i className="fas fa-sign-out-alt me-2"></i>
-                <span>Salir</span>
-            </button>
-            
-        </div>
-    );
+        {/* Botón de Carrito, solo si no está en la ruta del carrito */}
+        {location.pathname !== "/RealizarPedido/Carrito" && (
+          <Link
+            to={'/RealizarPedido/Carrito'}
+            className="bg-gradient-to-r from-orange-400 to-amber-500 hover:from-orange-500 hover:to-amber-600 text-white px-4 py-2 rounded-lg shadow-md transition-all duration-300"
+          >
+            <i className="fas fa-shopping-cart me-2"></i> Carrito
+          </Link>
+        )}
+        <Link to={'/login'}>
+        <button className="bg-gradient-to-r from-red-500 to-red-700 hover:bg-red-800 text-white px-4 py-2 rounded-lg shadow-md transition-all duration-300">
+          <i className="fas fa-sign-out-alt me-2"></i> Salir
+        </button>
+        </Link>
+      </div>
+    </div>
+  );
 };
