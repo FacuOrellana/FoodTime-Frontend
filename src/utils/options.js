@@ -1,8 +1,8 @@
 export const disponibilidadOptions = [
     {
         id: 1,
-        name: '',
-        value: ''
+        name: 'Selecciona una opción', // Texto inicial claro
+        value: null // Valor neutro para inicializar sin seleccionar
     },
     {
         id: 2,
@@ -14,22 +14,32 @@ export const disponibilidadOptions = [
         name: 'No Disponible',
         value: false
     }
-]
+];
 
 export const tipoMenuOptions = [
     {
         id: 1,
-        name: '',
-        value: ''
+        name: 'Selecciona un tipo de menú', // Texto inicial claro
+        value: '' // Valor neutro para inicializar sin seleccionar
     },
     {
         id: 2,
-        name: 'Almuerzo/Cena',
-        value: 1
+        name: 'Desayuno',
+        value: 'DESAYUNO'
     },
     {
         id: 3,
-        name: 'Desayuno/Merienda',
-        value: 2
+        name: 'Almuerzo',
+        value: 'ALMUERZO'
+    },
+    {
+        id: 4,
+        name: 'Merienda',
+        value: 'MERIENDA'
+    },
+    {
+        id: 5,
+        name: 'Cena',
+        value: 'CENA'
     }
-]
+];

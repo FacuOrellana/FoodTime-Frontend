@@ -13,9 +13,7 @@ export const getAllMenusApiCall = async () => {
 
 export const createNewMenuApiCall = async (menu) => {
     try {
-        console.log("dentro de api call" + rootApiRoute + "/GestionarMenus/Crear");
-        console.log(menu);
-        const response = await axios.post(rootApiRoute + "/GestionarMenus/Crear", menu);
+        const response = await axios.post(rootApiRoute + "/menus", menu);
         return response;
     } catch (error) {
         throw error;
@@ -36,7 +34,7 @@ export const deleteMenuApiCall = async (id) => {
 
 export const getMenuApiCall = async (id) => {
     try {
-        const response = await axios.get(rootApiRoute + "/GestionarMenus/"+ id);
+        const response = await axios.get(rootApiRoute + "/menus/"+ id);
         
         return response.data;
     } catch (error) {
@@ -46,7 +44,8 @@ export const getMenuApiCall = async (id) => {
 
 export const updateMenuApiCall = async (id, menu) => {
     try {
-        const response = await axios.put(rootApiRoute + "/GestionarMenus/"+id, menu);        
+        console.log(menu);
+        const response = await axios.put(rootApiRoute + "/menus/"+id, menu);        
         return response;
     } catch (error) {
         throw error;

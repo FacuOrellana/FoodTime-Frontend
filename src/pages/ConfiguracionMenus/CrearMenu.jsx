@@ -12,14 +12,16 @@ export const CrearMenu = () => {
   const [precio, setPrecio] = useState(0);
   const [descripcion, setDescripcion] = useState("");
   const [disponilidadOptions, setDisponilidadOptions] = useState(true);
-  const [tipoOptions, setTipoOptions] = useState(1);
+  const [tipoOptions, setTipoOptions] = useState("");
+  const [menuInsumo, setMenuInsumo] = useState([]);
 
   const [menu, setMenu] = useState({
     titulo: titulo,
     descripcion: descripcion,
     precio: precio,
     tipoMenu: tipoOptions,
-    disponibilidad: disponilidadOptions
+    disponibilidad: disponilidadOptions,
+    menuInsumoList: menuInsumo
   });
 
   useEffect(() => {
@@ -27,20 +29,20 @@ export const CrearMenu = () => {
     titulo: titulo,
     descripcion: descripcion,
     precio: precio,
-    TipoMenu: parseInt(tipoOptions),
-    disponibilidad: disponilidadOptions
+    tipoMenu: tipoOptions,
+    disponibilidad: disponilidadOptions,
+    menuInsumoList: []
     })
-  }, [titulo,precio,descripcion,disponilidadOptions,tipoOptions]);
+  }, [titulo,precio,descripcion,disponilidadOptions,tipoOptions,menuInsumo]);
 
   const crearMenu = () => {
-           
+         
     if (menu.disponibilidad === "true") {
       menu.disponibilidad = true; 
     } else {
       menu.disponibilidad = false 
     }
 
-    console.log(menu);
     titulo !== "" &&
     descripcion !== "" &&
     precio !== "" &&

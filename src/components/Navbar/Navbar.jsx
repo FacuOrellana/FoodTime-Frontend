@@ -1,13 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
+import { useUser } from "../../context/userContext";
+
 
 export const Navbar = () => {
+  const { user } = useUser();
   let location = useLocation();
 
   return (
     <div className="font-sans text-white bg-gradient-to-r from-orange-400 to-blue-600 px-4 py-3 shadow-md flex items-center justify-between">
       {/* Logo y nombre del usuario */}
       <span className="text-xl font-bold flex items-center">
-        <i className="fas fa-clipboard-user me-2"></i> Facundo O.
+        <i className="fas fa-clipboard-user me-2"></i> {user ? user.personaDto.nombre + " " +user.personaDto.apellido  : "Invitado"}
       </span>
       
       {/* Grupo de botones alineado a la derecha */}
