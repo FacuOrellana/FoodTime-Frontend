@@ -152,7 +152,7 @@ export const PedidosPage = () => {
                     <div className="mt-auto">
                       <button
                         className="bg-gradient-to-r from-sky-400 to-cyan-500 hover:scale-105 text-white px-4 py-2 rounded-lg transition-transform duration-300 inline-flex"
-                        onClick={() => navigate("/GestionInsumos")}
+                        onClick={() => navigate("/GestionarInsumos")}
                       >
                         Ir
                       </button>

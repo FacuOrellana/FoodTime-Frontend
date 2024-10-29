@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import { createNewMenuApiCall, updateMenuApiCall } from "../db/MenusApiCall";
 import { createNewPedidoApiCall } from "../db/PedidosApiCall";
+import { createNewInsumoApiCall, updateInsumoApiCall } from "../db/InsumoApiCall";
 
 export const getCarritoConfirmacionMsg = async (pedido) => {
     const result = await Swal.fire({
@@ -64,6 +65,53 @@ export const getMenuErrorMsg = (actionText) => {
         icon: "error",
         title: `Error en la ${actionText} del menú`, // Corrección de la interpolación
         text: "Por favor complete todos los atributos del menú",
+        confirmButtonText: "Aceptar",
+    });
+};
+
+export const getInsumoConfirmacionMsg = async (insumo) => {
+    const result = await Swal.fire({
+        icon: "info",
+        title: "¿Agregar insumo?",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+        await createNewInsumoApiCall(insumo); // Espera la llamada a la API
+        Swal.fire("insumo creado con éxito!", "", "success");
+    } else if (result.isDenied) {
+        Swal.fire("Creación de menú cancelada", "", "error");
+    }
+
+    return result; // Devuelve el resultado para manejar la redirección
+};
+
+export const getInsumoEditConfirmacionMsg = async (insumo) => {
+    const result = await Swal.fire({
+        icon: "info",
+        title: "¿Está seguro?",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+        await updateInsumoApiCall(insumo.id, insumo); // Espera la llamada a la API
+        Swal.fire("Insumo editado con éxito!", "", "success");
+    } else if (result.isDenied) {
+        Swal.fire("Edición de insumo cancelada", "", "error");
+    }
+
+    return result; // Devuelve el resultado para manejar la redirección
+};
+
+export const getInsumoErrorMsg = (actionText) => {
+    return Swal.fire({
+        icon: "error",
+        title: `Error en la ${actionText} del insumo`, // Corrección de la interpolación
+        text: "Por favor complete todos los atributos del insumo",
         confirmButtonText: "Aceptar",
     });
 };
