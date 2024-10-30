@@ -4,6 +4,9 @@ import { Carrito } from "../pages/Carrito";
 import { CrearMenu } from "../pages/ConfiguracionMenus/CrearMenu";
 import { EditarMenu } from "../pages/ConfiguracionMenus/EditarMenu";
 import { GestionarMenus } from "../pages/ConfiguracionMenus/GestionarMenus";
+import { CrearInsumo } from "../pages/ConfiguracionInsumos/CrearInsumo";
+import { EditarInsumo } from "../pages/ConfiguracionInsumos/EditarInsumo";
+import { GestionarInsumos } from "../pages/ConfiguracionInsumos/GestionarInsumos";
 import { ConsultarMenu } from "../pages/ConfiguracionMenus/ConsultarMenu";
 import { ListarPedidos } from "../pages/ListadoPedidos/ListarPedidos";
 import { ResumenPedido } from "../pages/ListadoPedidos/ResumenPedido";
@@ -37,6 +40,11 @@ export const Main = () => {
             <Route path="/GestionarMenus" element={<GestionarMenus />} />
             <Route path="/GestionarMenus/Crear" element={<CrearMenu />} />
             <Route path="/GestionarMenus/:id" element={<EditarMenu />} />
+            
+            {/* GESTION DE INSUMOS */}
+            <Route path="/GestionarInsumos" element={<GestionarInsumos />} />
+            <Route path="/GestionarInsumos/Crear" element={<CrearInsumo />} />
+            <Route path="/GestionarInsumos/:id" element={<EditarInsumo />} />
 
             <Route path="/ConsultarMenu" element={<ConsultarMenu />} />
 
