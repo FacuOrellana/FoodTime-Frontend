@@ -5,8 +5,6 @@ export const TableForInsumos = ({ data, deleteInsumo }) => {
 
     const headers = ['Id', 'Nombre', 'Unidad', 'Precio', 'Acciones'];
 
-
-
     const getInsumo = () => {
         getInsumoApiCall(data.id);
     };
@@ -32,10 +30,10 @@ export const TableForInsumos = ({ data, deleteInsumo }) => {
                             {item.id}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.Nombre}
+                            {item.nombre}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.Unidad}
+                            {item.unidad}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
                             <span className="bg-orange-200 text-gray-800 p-2 rounded-md">

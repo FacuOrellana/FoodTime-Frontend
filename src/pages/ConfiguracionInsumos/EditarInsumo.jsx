@@ -73,9 +73,6 @@ export const EditarInsumo = () => {
               inputName={"unidadInsumo"}
               col={12}
               marginT={"mt-4"}
-              keyPressEvent={(event) => {
-                if (!/[0-9.]/.test(event.key)) event.preventDefault();
-              }}
             />
           </div>
           <div className="col-6">
