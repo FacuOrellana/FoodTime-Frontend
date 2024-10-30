@@ -14,9 +14,7 @@ export const getAllPedidosApiCall = async () => {
 
 export const createNewPedidoApiCall = async (pedido) => {
     try {
-        console.log("dentro de api call" + rootApiRoute + "/Pedidos/Crear");        
-        console.log("antes del post " + pedido);
-        const response = await axios.post(rootApiRoute + "/Pedidos/Crear", pedido);
+        const response = await axios.post(rootApiRoute + "/pedidos", pedido);
         return response;
     } catch (error) {
         throw error;
@@ -25,7 +23,7 @@ export const createNewPedidoApiCall = async (pedido) => {
 
 export const getPedidoApiCall = async (id) => {
     try {
-        const response = await axios.get(rootApiRoute + "/Pedidos/"+ id);
+        const response = await axios.get(rootApiRoute + "/pedidos/"+ id);
         return response.data;
     } catch (error) {
         throw error;

@@ -113,7 +113,7 @@ export const PedidosPage = () => {
                   <div className="p-6 flex flex-col justify-between flex-grow">
                     <div>
                       <h1 className="title-font text-lg font-semibold text-gray-800 mb-3">
-                        Gestionar de menus
+                        Gestion de menus
                       </h1>
                       <p className="leading-relaxed mb-5">
                         Este módulo está diseñado para que el personal de cocina pueda crear, modificar y dar de baja los menús. Mantén actualizada la oferta del restaurante de forma fácil y rápida.

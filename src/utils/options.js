@@ -1,10 +1,5 @@
 export const disponibilidadOptions = [
     {
-        id: 1,
-        name: 'Selecciona una opción', // Texto inicial claro
-        value: null // Valor neutro para inicializar sin seleccionar
-    },
-    {
         id: 2,
         name: 'Disponible',
         value: true
@@ -17,11 +12,6 @@ export const disponibilidadOptions = [
 ];
 
 export const tipoMenuOptions = [
-    {
-        id: 1,
-        name: 'Selecciona un tipo de menú', // Texto inicial claro
-        value: '' // Valor neutro para inicializar sin seleccionar
-    },
     {
         id: 2,
         name: 'Desayuno',

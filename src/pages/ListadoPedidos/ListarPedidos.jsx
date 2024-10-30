@@ -1,22 +1,34 @@
-import React, { useEffect, useState } from 'react'
-import { PageTitles } from '../../components/PageTitles/PageTitles'
-import { TableForOrderList } from '../../components/Tables/TableForOrderList'
+import React, { useEffect, useState } from 'react';
+import { PageTitles } from '../../components/PageTitles/PageTitles';
+import { TableForOrderList } from '../../components/Tables/TableForOrderList';
 import { getAllPedidosApiCall } from '../../db/PedidosApiCall';
+import { getOnePersonaApiCall } from '../../db/personaApiCall'; // Asegúrate de importar la función correctamente
 
 export const ListarPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
 
   useEffect(() => {
-    getAllPedidosApiCall()
-      .then((pedidos) => {
-        setPedidos(pedidos);
-        console.log(pedidos);
-      })
-      .catch((e) => {
+    const fetchData = async () => {
+      try {
+        const pedidosData = await getAllPedidosApiCall();
+        const pedidosConPersonas = await Promise.all(
+          pedidosData.map(async (pedido) => {
+            const persona = await getOnePersonaApiCall(pedido.personaId);
+            const personaNombreCompleto = `${persona.data.nombre} ${persona.data.apellido}`;
+            return {
+              ...pedido,
+              personaNombreCompleto // Agrega el nombre completo al pedido
+            };
+          })
+        );
+        setPedidos(pedidosConPersonas);
+      } catch (e) {
         console.log(e);
-      });
-      console.log("lista de pedidos: " + JSON.stringify(pedidos));
-  }, [setPedidos]);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <section className="p-4">
@@ -29,9 +41,8 @@ export const ListarPedidos = () => {
       <div className="mt-6">
         <div className="overflow-x-auto sm:-mx-4">
           <div className="sm:px-4">
-            
-           { pedidos.length===0 ? <h1>Loading</h1> :
-            <TableForOrderList data={pedidos} /> }
+            {pedidos.length === 0 ? <h1>Loading</h1> :
+              <TableForOrderList data={pedidos} /> }
           </div>
         </div>
       </div>

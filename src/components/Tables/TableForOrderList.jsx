@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export const TableForOrderList = ({ data }) => {
-    const headers = ['N° Pedido', 'Usuario', 'Estado', 'Hora de entrega', 'Cantidad de Menus', 'Total', 'Acciones'];
+    const headers = ['N° Pedido', 'Cliente', 'Estado', 'Hora de entrega', 'Cantidad de Menus', 'Total', 'Acciones'];
 
     // Función para asignar clases de color según el estado del pedido
     const getEstadoClass = (estado) => {
@@ -35,7 +35,7 @@ export const TableForOrderList = ({ data }) => {
                             {item.id}
                         </td>
                         <td className="text-md text-gray-800 font-semibold px-4 py-3 text-center">
-                            {item.personaId}
+                            {item.personaNombreCompleto}
                         </td>
                         <td className="text-md text-center px-4 py-3">
                             <span className={getEstadoClass(item.estadoPedido)}>

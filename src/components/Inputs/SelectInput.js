@@ -1,21 +1,26 @@
 import React from 'react'
 
-export const SelectInput = ({ value, setValue, inputTitle, inputName, dataOptions, col, marginT }) => {
-
+export const SelectInput = ({ value, setValue, inputTitle, inputName, dataOptions = [], col, marginT }) => {
     return (
         <div className={`${marginT} col-md-${col ? col : '6'} col-sm-12 col-lg-${col ? col : '3'}`}>
             <label className="text-gray-100 text-lg mb-1">{inputTitle}</label>
             <select
-                id={inputName} name={inputName} className="form-select required center-block"
-                value={value} onChange={(e) => { setValue(e.target.value) }}
+                id={inputName} 
+                name={inputName} 
+                className="form-select required center-block"
+                value={value} 
+                onChange={(e) => setValue(e.target.value)}
             >
+                <option value="">Selecciona una opción</option>
                 {dataOptions.map((item) => (
-                    <option value={item.value}>{item.name}</option>
+                    <option key={item.id} value={item.value}>
+                        {item.name}
+                    </option>
                 ))}
             </select>
         </div>
-    )
-}
+    );
+};
 
 export const SelectInputWithHorizontalLabel = ({ value, setValue, inputTitle, inputName, dataOptions }) => {
     return (
