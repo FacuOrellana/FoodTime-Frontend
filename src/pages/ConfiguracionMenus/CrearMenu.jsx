@@ -4,7 +4,7 @@ import { SelectInput, TextInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
 import { getMenuConfirmacionMsg, getMenuErrorMsg } from "../../utils/messages";
 import { disponibilidadOptions, tipoMenuOptions } from "../../utils/options";
-import { getAllInsumosApiCall } from "../../db/insumosApiCall";
+import { getAllInsumoApiCall } from "../../db/InsumoApiCall";
 
 export const CrearMenu = () => {
   const [titulo, setTitulo] = useState("");
@@ -39,7 +39,7 @@ export const CrearMenu = () => {
 
   useEffect(() => {
     const obtenerInsumos = async () => {
-      const data = await getAllInsumosApiCall();
+      const data = await getAllInsumoApiCall();
       const formattedInsumos = data.map((insumo) => ({
         id: insumo.id,
         name: insumo.nombre,
