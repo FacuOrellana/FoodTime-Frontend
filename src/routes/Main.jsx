@@ -7,6 +7,9 @@ import { GestionarMenus } from "../pages/ConfiguracionMenus/GestionarMenus";
 import { CrearInsumo } from "../pages/ConfiguracionInsumos/CrearInsumo";
 import { EditarInsumo } from "../pages/ConfiguracionInsumos/EditarInsumo";
 import { GestionarInsumos } from "../pages/ConfiguracionInsumos/GestionarInsumos";
+import { GestionarUsuarios } from "../pages/ConfiguracionUsuarios/GestionarUsuarios";
+import { CrearUsuario } from "../pages/ConfiguracionUsuarios/CrearUsuario";
+import { EditarUsuario } from "../pages/ConfiguracionUsuarios/EditarUsuario";
 import { ConsultarMenu } from "../pages/ConfiguracionMenus/ConsultarMenu";
 import { ListarPedidos } from "../pages/ListadoPedidos/ListarPedidos";
 import { ResumenPedido } from "../pages/ListadoPedidos/ResumenPedido";
@@ -45,6 +48,11 @@ export const Main = () => {
             <Route path="/GestionarInsumos" element={<GestionarInsumos />} />
             <Route path="/GestionarInsumos/Crear" element={<CrearInsumo />} />
             <Route path="/GestionarInsumos/:id" element={<EditarInsumo />} />
+            
+            {/* GESTION DE INSUMOS */}
+            <Route path="/GestionarUsuarios" element={<GestionarUsuarios />} />
+            <Route path="/GestionarUsuarios/Crear" element={<CrearUsuario />} />
+            <Route path="/GestionarUsuarios/:id" element={<EditarUsuario />} />
 
             <Route path="/ConsultarMenu" element={<ConsultarMenu />} />
 
