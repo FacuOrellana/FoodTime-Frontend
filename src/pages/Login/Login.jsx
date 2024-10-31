@@ -22,15 +22,14 @@ const LoginForm = () => {
     e.preventDefault();
     setUser(null);
     try {
-      navigate("/pedidos");
-      // const response = await loginApiCall(email, password);
-      // if (response.status === 200) {
-      //   const usuario = response.data.usuario;
-      //   setUser(usuario); // Establece el usuario en el contexto
-      //   navigate("/pedidos", { state: { email } });
-      // } else {
-      //   setErrorMessage("Usuario o contraseña inválidos");
-      // }
+      const response = await loginApiCall(email, password);
+      if (response.status === 200) {
+        const usuario = response.data.usuario;
+        setUser(usuario); // Establece el usuario en el contexto
+        navigate("/pedidos", { state: { email } });
+      } else {
+        setErrorMessage("Usuario o contraseña inválidos");
+      }
     } catch (error) {
       setErrorMessage("Error al iniciar sesión. Intente nuevamente.");
     }
