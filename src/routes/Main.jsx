@@ -10,6 +10,7 @@ import { GestionarInsumos } from "../pages/ConfiguracionInsumos/GestionarInsumos
 import { ConsultarMenu } from "../pages/ConfiguracionMenus/ConsultarMenu";
 import { ListarPedidos } from "../pages/ListadoPedidos/ListarPedidos";
 import { ResumenPedido } from "../pages/ListadoPedidos/ResumenPedido";
+import { PedidosByPersona } from "../pages/Reportes/PedidosByPersona"
 import NavbarLayout from "../components/Navbar/NavbarLayout";
 import Login from "../pages/Login";
 
@@ -47,6 +48,11 @@ export const Main = () => {
             <Route path="/GestionarInsumos/:id" element={<EditarInsumo />} />
 
             <Route path="/ConsultarMenu" element={<ConsultarMenu />} />
+
+            {/* SECCION DE REPORTES */ }
+            
+            <Route path="/PedidosByPersona/:id" element={<PedidosByPersona />} />
+
 
           </Route>
         </Routes>
