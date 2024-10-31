@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { PageTitles } from '../../components/PageTitles/PageTitles';
 import { TableForOrderList } from '../../components/Tables/TableForOrderList';
 import { getAllPedidosApiCall } from '../../db/PedidosApiCall';
-import { getOnePersonaApiCall } from '../../db/personaApiCall'; // Asegúrate de importar la función correctamente
+import { getOnePersonaApiCall } from '../../db/personaApiCall';
+import { updateEstadoPedidoApiCall } from '../../db/PedidosApiCall'; // Asegúrate de importar la función correctamente
 
 export const ListarPedidos = () => {
   const [pedidos, setPedidos] = useState([]);
@@ -30,6 +31,16 @@ export const ListarPedidos = () => {
     fetchData();
   }, []);
 
+  const handleUpdateEstado = async (id, nuevoEstado) => {
+    try {
+        await updateEstadoPedidoApiCall(id, nuevoEstado); // Cambia el estado
+        const updatedPedidos = await getAllPedidosApiCall(); // Vuelve a cargar los pedidos
+        setPedidos(updatedPedidos); // Actualiza el estado
+    } catch (e) {
+        console.log(e);
+    }
+};
+
   return (
     <section className="p-4">
       <PageTitles
@@ -42,7 +53,7 @@ export const ListarPedidos = () => {
         <div className="overflow-x-auto sm:-mx-4">
           <div className="sm:px-4">
             {pedidos.length === 0 ? <h1>Loading</h1> :
-              <TableForOrderList data={pedidos} /> }
+              <TableForOrderList data={pedidos} onUpdateEstado={handleUpdateEstado}/> }
           </div>
         </div>
       </div>

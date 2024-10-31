@@ -6,7 +6,7 @@ import { getMenuApiCall } from '../../db/MenusApiCall';
 import { getMenuEditConfirmacionMsg, getMenuErrorMsg } from '../../utils/messages';
 import { disponibilidadOptions, tipoMenuOptions } from '../../utils/options';
 import { useNavigate } from 'react-router-dom';
-import { getAllInsumosApiCall } from "../../db/insumosApiCall";
+import { getAllInsumoApiCall } from "../../db/InsumoApiCall";
 
 export const EditarMenu = () => {
   const { id } = useParams(); // Obtenemos el id del menú desde los parámetros de la URL
@@ -47,7 +47,7 @@ export const EditarMenu = () => {
 
   useEffect(() => {
     const obtenerInsumos = async () => {
-      const data = await getAllInsumosApiCall();
+      const data = await getAllInsumoApiCall();
       const formattedInsumos = data.map((insumo) => ({
         id: insumo.id,
         name: insumo.nombre,

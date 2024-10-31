@@ -29,3 +29,20 @@ export const getPedidoApiCall = async (id) => {
         throw error;
     }    
 }
+
+export const updateEstadoPedidoApiCall = async (id, nuevoEstado) => {
+    try {
+        console.log(id);
+        console.log(nuevoEstado);
+        // Envía directamente nuevoEstado como un String en el cuerpo de la solicitud
+        const response = await axios.put(rootApiRoute + "/pedidos/cambiarestado/" + id, nuevoEstado, {
+            headers: {
+                'Content-Type': 'text/plain' // Asegúrate de que el tipo de contenido sea correcto
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar el estado del pedido:', error);
+        throw error;
+    }    
+}

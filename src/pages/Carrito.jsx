@@ -6,7 +6,7 @@ import { carritoCompras } from "../db/datosPrueba";
 import { getCarritoConfirmacionMsg } from "../utils/messages";
 import { getTotalArticulos, getTotalPedido } from "../utils/selector";
 import { useUser } from "../context/userContext";
-import { format } from 'date-fns';
+import { format, addMinutes, addHours, isBefore } from 'date-fns';
 
 export const Carrito = ({ history }) => {
   const [totalPedido, setTotalPedido] = useState(0);
@@ -14,6 +14,8 @@ export const Carrito = ({ history }) => {
   const [lineasPedidos, setLineasPedidos] = useState([]);
   const [pedido, setPedido] = useState(null);
   const { user } = useUser();
+  const [metodoPago, setMetodoPago] = useState("");
+  const [tiempoEntrega, setTiempoEntrega] = useState("");
 
   useEffect(() => {
     setTotalPedido(getTotalPedido(carritoCompras));
@@ -30,7 +32,31 @@ export const Carrito = ({ history }) => {
     });
     setTotalArticulos(articulosTotales);
     setTotalPedido(total);
+
+    const initialTime = addMinutes(new Date(), 30);
+    setTiempoEntrega(format(initialTime, "yyyy-MM-dd HH:mm:ss"));
   }, []);
+
+  const generateTimeOptions = () => {
+    const options = [];
+    options.push("INMEDIATO");
+    let currentTime = addMinutes(new Date(), 45);
+
+    // Redondear al siguiente intervalo de 15 minutos
+    const minutes = currentTime.getMinutes();
+    const nextInterval = Math.ceil(minutes / 15) * 15;
+    currentTime = addMinutes(currentTime, nextInterval - minutes);
+
+    // Hora límite de las 21:00
+    const limitTime = addHours(new Date(), 2);
+
+    while (isBefore(currentTime, limitTime)) {
+      options.push(format(currentTime, "HH:mm"));
+      currentTime = addMinutes(currentTime, 15); // Sumar 15 minutos para la siguiente opción
+    }
+
+    return options;
+  };
 
   const confirmOrderCarrito = () => {
     let menuItems = JSON.parse(localStorage.getItem("lineaPedido") || "[]");
@@ -42,15 +68,29 @@ export const Carrito = ({ history }) => {
     }));
 
     const idPersona = user?.personaDto?.id;
+    // Convertir `tiempoEntrega` a LocalDateTime o asignarlo a null si es "INMEDIATO"
+    let tiempoEntregaFormato = null;
 
-    const d1 = new Date();
-  d1.setMinutes(d1.getMinutes() + 30);
-  const tiempoEntrega = format(d1, "yyyy-MM-dd HH:mm:ss");
+  if (tiempoEntrega && tiempoEntrega !== "INMEDIATO") {
+    try {
+      const today = new Date();
+      const [hours, minutes] = tiempoEntrega.split(":").map(Number);
+
+      if (!isNaN(hours) && !isNaN(minutes)) {
+        const entregaDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes);
+        tiempoEntregaFormato = format(entregaDate, "yyyy-MM-dd HH:mm:ss");
+      } else {
+        console.error("Formato de tiempoEntrega no válido:", tiempoEntrega);
+      }
+    } catch (error) {
+      console.error("Error al procesar tiempoEntrega:", error);
+    }
+  }
 
     let pedidoDto = {
       id: null,
-      tiempoEntrega: tiempoEntrega,
-      metodoPago: "EFECTIVO",
+      tiempoEntrega: tiempoEntregaFormato,
+      metodoPago: metodoPago,
       total: totalPedido,
       personaId: idPersona,
       pedidoMenuList: arrayBack,
@@ -78,53 +118,83 @@ export const Carrito = ({ history }) => {
 
   return (
     <section className="p-4">
-      <PageTitles
-        title={"Carrito de Compras"}
-        subtitle={"Pedidos Seleccionados"}
-        color={"text-orange-400"}
-      />
-      <div className="mt-6">
-        <div className="overflow-x-auto sm:-mx-4">
-          <div className="sm:px-4">
-            {lineasPedidos.length === 0 ? (
-              <h1>Loading</h1>
-            ) : (
-              <TableForCarrito data={lineasPedidos} onRemove={handleRemove} />
-            )}
-          </div>
-        </div>
+  <PageTitles
+    title={"Carrito de Compras"}
+    subtitle={"Pedidos Seleccionados"}
+    color={"text-orange-400"}
+  />
+  <div className="mt-6">
+    <div className="overflow-x-auto sm:-mx-4">
+      <div className="sm:px-4">
+        {lineasPedidos.length === 0 ? (
+          <h1 className="text-center text-lg text-gray-700 font-semibold">
+            Todavía no se agregaron menús al pedido
+          </h1>
+        ) : (
+          <TableForCarrito data={lineasPedidos} onRemove={handleRemove} />
+        )}
       </div>
-      <div className="flex justify-between mt-16 bg-teal-800 p-3 text-white rounded-lg">
-        <div className="flex justify-between">
-          <h1 className="mt-2 text-xl">
-            Total del Resumen de Compra:{" "}
-            <span className="text-gray-900 font-bold text-xl ml-5 bg-teal-400 rounded-md p-2">
-              $ {totalPedido}
-            </span>
-          </h1>
-          <h1 className="ml-10 mt-2 text-xl">
-            Cantidad de Articulos:{" "}
-            <span className="text-gray-900 font-bold text-xl ml-5 bg-cyan-400 rounded-md p-2">
-              {totalArticulos}
-            </span>
-          </h1>
-        </div>
-        <div className="flex justify-end">
-          <Link to={"/RealizarPedido"}>
-            <button className="ml-10 inline-flex justify-center rounded-md border border-transparent bg-red-600 text-gray-100 py-2 px-5 text-sm font-medium buttonStyleCustom hover:bg-orange-500 hover:text-gray-900'"
-              onClick={clearCarrito}
-            >
-              Cancelar
-            </button>
-          </Link>
-          <button
-            className="ml-10 inline-flex justify-center rounded-md border border-transparent bg-indigo-500 hover:bg-teal-500 py-2 px-5 text-sm font-medium text-white buttonStyleCustom"
-            onClick={confirmOrderCarrito}
+      <div className="mt-4 flex flex-col items-center space-y-4">
+        <div className="w-2/3 max-w-md">
+          <label className="block text-gray-700 text-lg font-semibold mb-2">Método de Pago:</label>
+          <select
+            className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
+            value={metodoPago}
+            onChange={(e) => setMetodoPago(e.target.value)}
           >
-            Realizar Pedido
-          </button>
+            <option value="EFECTIVO">Efectivo</option>
+            <option value="TRANSFERENCIA">Transferencia</option>
+          </select>
+        </div>
+        <div className="w-2/3 max-w-md">
+          <label className="block text-gray-700 text-lg font-semibold mb-2">Tiempo de Entrega:</label>
+          <select
+            className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
+            value={tiempoEntrega}
+            onChange={(e) => setTiempoEntrega(e.target.value)}
+          >
+            {generateTimeOptions().map((time) => (
+              <option key={time} value={time}>{time}</option>
+            ))}
+          </select>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+  <div className="flex justify-between mt-16 bg-teal-800 p-3 text-white rounded-lg">
+    <div className="flex justify-between">
+      <h1 className="mt-2 text-xl">
+        Total del Resumen de Compra:{" "}
+        <span className="text-gray-900 font-bold text-xl ml-5 bg-teal-400 rounded-md p-2">
+          $ {totalPedido}
+        </span>
+      </h1>
+      <h1 className="ml-10 mt-2 text-xl">
+        Cantidad de Articulos:{" "}
+        <span className="text-gray-900 font-bold text-xl ml-5 bg-cyan-400 rounded-md p-2">
+          {totalArticulos}
+        </span>
+      </h1>
+    </div>
+    <div className="flex justify-end">
+      <Link to={"/RealizarPedido"}>
+        <button className="ml-10 inline-flex justify-center rounded-md border border-transparent bg-red-600 text-gray-100 py-2 px-5 text-sm font-medium buttonStyleCustom hover:bg-orange-500 hover:text-gray-900"
+          onClick={clearCarrito}
+        >
+          Cancelar
+        </button>
+      </Link >
+      <Link to={"/RealizarPedido"}>
+      <button
+        className="ml-10 inline-flex justify-center rounded-md border border-transparent bg-indigo-500 hover:bg-teal-500 py-2 px-5 text-sm font-medium text-white buttonStyleCustom"
+        onClick={confirmOrderCarrito}
+      >
+        Realizar Pedido
+      </button>
+      </Link>
+    </div>
+  </div>
+</section>
+
   );
 };

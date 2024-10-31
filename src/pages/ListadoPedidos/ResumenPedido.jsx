@@ -23,28 +23,16 @@ export const ResumenPedido = () => {
           ...data,
           nombrePersona: personaNombreCompleto
         });
-
-        console.log(data);
-
         // Obtener los menús correspondientes a los pedidoMenu
-        const menuPromises = data.pedidoMenuList.map(pedidoMenuItem => getMenuApiCall(pedidoMenuItem.menuId));
-
-        
+        const menuPromises = data.pedidoMenuList.map(pedidoMenuItem => getMenuApiCall(pedidoMenuItem.menuId));       
 
         const menusData = await Promise.all(menuPromises);
-
-        console.log(menusData);
-
 
         // Asociar los menús obtenidos con sus cantidades
         const menusWithQuantity = menusData.map((menu, index) => ({
           ...menu,
           cantidad: data.pedidoMenuList[index].cantidad // Agrega la cantidad del pedidoMenu
         }));
-
-
-        console.log(menusWithQuantity);
-
         setPedidoMenus(menusWithQuantity); // Guarda los menús con las cantidades
         setLoadState(true);
       } catch (e) {
@@ -66,7 +54,7 @@ export const ResumenPedido = () => {
               <DetallesPedidoTitleComponent title={'Detalles del Pedido'} />
               <hr style={{ color: 'white' }} />
               <DetallesPedidoComponent title={'Usuario'} value={pedido.nombrePersona} />
-              <DetallesPedidoComponent title={'Fecha de Pedido'} value={pedido.tiempoEntrega} />
+              <DetallesPedidoComponent   title={'Fecha de Pedido'} value={pedido.tiempoEntrega ? new Date(pedido.tiempoEntrega).toLocaleString() : "INMEDIATO"}/>
               <DetallesPedidoComponent title={'Total a Pagar'} value={pedido.total} />
 
               <div className='row mt-6'>

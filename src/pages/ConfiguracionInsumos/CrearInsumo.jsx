@@ -80,17 +80,21 @@ export const CrearInsumo = () => {
 
             <div className="flex justify-center mt-10">
               <Link
-                to={"/GestionarMenus"}
+                to={"/GestionarInsumos"}
                 className="text-center w-48 bg-red-400 text-gray-100 p-3 rounded-lg hover:bg-orange-500 hover:text-gray-900"
               >
                 <span className=" text-xl">Cancelar</span>
               </Link>
+              <Link
+                to={"/GestionarInsumos"}
+              >
               <button
                 className="w-48 bg-blue-600 text-gray-100 p-3 rounded-lg hover:bg-teal-400 hover:text-gray-900 ml-10"
                 onClick={crearInsumo}
               >
                 <span className=" text-xl">Agregar Insumo</span>
               </button>
+              </Link>
             </div>
           </div>
         </div>
