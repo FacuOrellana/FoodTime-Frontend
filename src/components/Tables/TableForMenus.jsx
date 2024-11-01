@@ -7,8 +7,8 @@ export const TableForMenus = ({ data, deleteMenu }) => {
 
 
 
-    const getMenu = () => {
-        getMenuApiCall(data.id);
+    const getMenu = (id) => {
+        getMenuApiCall(id);
     };
 
     return (

@@ -5,8 +5,8 @@ export const TableForInsumos = ({ data, deleteInsumo }) => {
 
     const headers = ['Id', 'Nombre', 'Unidad', 'Precio', 'Acciones'];
 
-    const getInsumo = () => {
-        getInsumoApiCall(data.id);
+    const getInsumo = (id) => {
+        getInsumoApiCall(id);
     };
 
     return (
