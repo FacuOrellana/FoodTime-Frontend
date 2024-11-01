@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { SelectInput, TextInput } from "../../components/Inputs";
+import { TextInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
 import { getInsumoApiCall } from "../../db/InsumoApiCall";
 import {
@@ -16,9 +16,13 @@ export const EditarInsumo = () => {
   const [precio, setPrecio] = useState(0);
 
   const navigate = useNavigate();
+  const hasFetched = useRef(false);
 
   useEffect(() => {
     const fetchInsumo = async () => {
+      if (hasFetched.current) return; //  ya se ejecutó DETENGO
+      hasFetched.current = true; // Marco que ya se ejecuto
+
       try {
         const insumo = await getInsumoApiCall(id);
         setNombre(insumo.nombre);

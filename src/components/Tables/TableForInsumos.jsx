@@ -5,9 +5,6 @@ export const TableForInsumos = ({ data, deleteInsumo }) => {
 
     const headers = ['Id', 'Nombre', 'Unidad', 'Precio', 'Acciones'];
 
-    const getInsumo = (id) => {
-        getInsumoApiCall(id);
-    };
 
     return (
         <table className="table border text-center">
@@ -50,7 +47,6 @@ export const TableForInsumos = ({ data, deleteInsumo }) => {
                             <Link
                                 to={`/GestionarInsumos/${item.id}`}
                                 className="bg-blue-500 text-white p-2 w-24 rounded-md"
-                                onClick={() => getInsumo(item.id)}
                             >
                                 Editar
                             </Link>

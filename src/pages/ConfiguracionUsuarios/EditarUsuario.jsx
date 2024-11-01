@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { SelectInput, TextInput, DateInput, EmailInput, PasswordInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
@@ -25,9 +25,13 @@ export const EditarUsuario = () => {
   const [personaId, setPersonaId] = useState("");
 
   const navigate = useNavigate();
+  const hasFetched = useRef(false);
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (hasFetched.current) return; //  ya se ejecutó DETENGO
+      hasFetched.current = true; // Marco que ya se ejecuto
+
       try {
         const user = await getUserApiCall(id);
         setEmail(user.email);
@@ -40,7 +44,7 @@ export const EditarUsuario = () => {
         setDireccion(user.personaDto.direccion);
         const fechaFormateada = user.personaDto.fechaNacimiento.split("-").reverse().join("-");
         setFechaNacimiento(fechaFormateada);
-        setPersonaId(user.personaDto.id)
+        setPersonaId(user.personaDto.id);
       } catch (error) {
         console.error("Error fetching user:", error);
       }

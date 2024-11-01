@@ -1,15 +1,9 @@
 import { Link } from "react-router-dom";
-import { getMenuApiCall } from "../../db/MenusApiCall";
 
 export const TableForMenus = ({ data, deleteMenu }) => {
 
     const headers = ['Id', 'Titulo', 'Descripcion', 'Tipo Menu', 'Precio', 'Disponibilidad', 'Acciones'];
 
-
-
-    const getMenu = (id) => {
-        getMenuApiCall(id);
-    };
 
     return (
         <table className="table border text-center">
@@ -67,7 +61,6 @@ export const TableForMenus = ({ data, deleteMenu }) => {
                             <Link
                                 to={`/GestionarMenus/${item.id}`}
                                 className="bg-blue-500 text-white p-2 w-24 rounded-md"
-                                onClick={() => getMenu(item.id)}
                             >
                                 Editar
                             </Link>
