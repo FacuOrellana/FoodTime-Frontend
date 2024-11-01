@@ -23,6 +23,7 @@ export const EditarUsuario = () => {
   const [numeroTelefono, setNumeroTelefono] = useState("");
   const [direccion, setDireccion] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [personaId, setPersonaId] = useState("");
 
   const navigate = useNavigate();
 
@@ -33,12 +34,14 @@ export const EditarUsuario = () => {
         setEmail(user.email);
         setPassword(user.password);
         setTipoUsuario(user.tipoUsuario);
-        setDni(user.dni);
-        setNombre(user.nombre);
-        setApellido(user.apellido);
-        setNumeroTelefono(user.numeroTelefono);
-        setDireccion(user.direccion);
-        setFechaNacimiento(user.fechaNacimiento);
+        setDni(user.personaDto.dni);
+        setNombre(user.personaDto.nombre);
+        setApellido(user.personaDto.apellido);
+        setNumeroTelefono(user.personaDto.numeroTelefono);
+        setDireccion(user.personaDto.direccion);
+        const fechaFormateada = user.personaDto.fechaNacimiento.split("-").reverse().join("-");
+        setFechaNacimiento(fechaFormateada);
+        setPersonaId(user.personaDto.id)
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -49,12 +52,12 @@ export const EditarUsuario = () => {
   const getTodayDate = () => {
     const today = new Date();
     return today.toISOString().split("T")[0];
-};
+  };
 
   const editUser = () => {
     const isValid = email && password && tipoUsuario &&
-                    dni && nombre && apellido && 
-                    numeroTelefono && direccion && fechaNacimiento;
+      dni && nombre && apellido &&
+      numeroTelefono && direccion && fechaNacimiento;
 
     if (isValid) {
       // Validación de que la fecha de nacimiento no es futura
@@ -63,16 +66,20 @@ export const EditarUsuario = () => {
         return;
       }
 
+      let fechaFormateada = fechaNacimiento.split("-").reverse().join("-");
+
       const personaDto = {
+        id: personaId,
         dni,
         nombre,
         apellido,
         numeroTelefono,
         direccion,
-        fechaNacimiento,
+        fechaNacimiento: fechaFormateada,
       };
 
       const userData = {
+        id,
         email,
         password,
         tipoUsuario,
@@ -96,7 +103,7 @@ export const EditarUsuario = () => {
       <div className="bg-gray-800 mt-10 rounded-lg">
         <div className="row p-3">
           <div className="col-6">
-          <TextInput
+            <TextInput
               inputTitle={"Nombre"}
               value={nombre}
               setValue={setNombre}
@@ -121,24 +128,24 @@ export const EditarUsuario = () => {
               marginT={"mt-4"}
             />
             <EmailInput
-                inputTitle={"Email"}
-                value={email}
-                setValue={setEmail}
-                inputName={"emailUser"}
-                col={12}
-                marginT={"mt-4"}
-              />
+              inputTitle={"Email"}
+              value={email}
+              setValue={setEmail}
+              inputName={"emailUser"}
+              col={12}
+              marginT={"mt-4"}
+            />
             <PasswordInput
-                inputTitle={"Password"}
-                value={password}
-                setValue={setPassword}
-                inputName={"passwordUser"}
-                col={12}
-                marginT={"mt-4"}
-              />
+              inputTitle={"Password"}
+              value={password}
+              setValue={setPassword}
+              inputName={"passwordUser"}
+              col={12}
+              marginT={"mt-4"}
+            />
           </div>
           <div className="col-6">
-          <SelectInput
+            <SelectInput
               inputTitle={"Tipo de Usuario"}
               value={tipoUsuario}
               setValue={setTipoUsuario}
@@ -149,14 +156,14 @@ export const EditarUsuario = () => {
             />
 
             <DateInput
-                inputTitle={"Fecha de Nacimiento "}
-                value={fechaNacimiento}
-                setValue={setFechaNacimiento}
-                inputName={"fechaNacimientoUser"}
-                col={12}
-                marginT={"mt-4"}
-                today={getTodayDate()}
-              />
+              inputTitle={"Fecha de Nacimiento "}
+              value={fechaNacimiento}
+              setValue={setFechaNacimiento}
+              inputName={"fechaNacimientoUser"}
+              col={12}
+              marginT={"mt-4"}
+              today={getTodayDate()}
+            />
 
             <TextInput
               inputTitle={"Celular"}

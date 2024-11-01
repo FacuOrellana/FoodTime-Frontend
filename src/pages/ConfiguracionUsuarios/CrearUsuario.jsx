@@ -25,6 +25,7 @@ export const CrearUsuario = () => {
 
   const crearUsuario = () => {
     
+    let fechaFormateada = fechaNacimiento.split("-").reverse().join("-");
 
     const personaDto = {
       dni,
@@ -32,7 +33,7 @@ export const CrearUsuario = () => {
       apellido,
       numeroTelefono,
       direccion,
-      fechaNacimiento,
+      fechaNacimiento: fechaFormateada,
     };
 
     // Crear user con personaDto anidado

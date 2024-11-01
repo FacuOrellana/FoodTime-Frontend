@@ -27,6 +27,7 @@ export const getAllUserApiCall = async () => {
 
 export const createNewUserApiCall = async (usuario) => {
     try {
+        console.log(usuario);
         const response = await axios.post(rootApiRoute + "/usuarios", usuario);
         return response;
     } catch (error) {
@@ -46,6 +47,7 @@ export const deleteUserApiCall = async (id) => {
 
 export const getUserApiCall = async (id) => {
     try {
+        console.log(id);
         const response = await axios.get(rootApiRoute + "/usuarios/"+ id);
         
         return response.data;
@@ -56,7 +58,8 @@ export const getUserApiCall = async (id) => {
 
 export const updateUserApiCall = async (id, usuario) => {
     try {
-        console.log('Updating user:', usuario);
+        console.log('Updating user:');
+        console.log(usuario);
         const response = await axios.put(rootApiRoute + "/usuarios/"+id, usuario);        
         return response;
     } catch (error) {

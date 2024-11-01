@@ -36,19 +36,19 @@ export const TableForUsers = ({ data, deleteUser }) => {
                             {item.tipoUsuario}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.dni}
+                            {item.personaDto.dni}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.nombre} {item.apellido}
+                            {item.personaDto.nombre} {item.personaDto.apellido}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.numeroTelefono}
+                            {item.personaDto.numeroTelefono}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.direccion}
+                            {item.personaDto.direccion}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.fechaNacimiento}
+                            {item.personaDto.fechaNacimiento}
                         </td>
 
                         <td className="flex justify-center border-none mt-1">
