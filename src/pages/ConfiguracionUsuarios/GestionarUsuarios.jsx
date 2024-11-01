@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { TableForUsers } from "../../components/Tables/TableForUsers";
-import { getAllUserApiCall, deleteUserApiCall } from "../../db/UsuariosApiCall";
+import { getAllUserApiCall, deleteUserApiCall } from "../../db/usuariosApiCall";
 
 export const GestionarUsuarios = () => {
   const [user, setUser] = useState([]);

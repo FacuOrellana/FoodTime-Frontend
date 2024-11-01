@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { SelectInput, TextInput, DateInput, EmailInput, PasswordInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
-import { getInsumoApiCall } from "../../db/InsumoApiCall";
 import {
   getUserEditConfirmacionMsg,
   getUserErrorMsg,
   getUserNotifyErrorDateMsg,
 } from "../../utils/messages";
 import { useNavigate } from "react-router-dom";
-import { getUserApiCall } from "../../db/UsuariosApiCall";
+import { getUserApiCall } from "../../db/usuariosApiCall";
 import { tipoUsuariosOptions } from "../../utils/options";
 
 export const EditarUsuario = () => {

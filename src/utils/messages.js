@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import { createNewMenuApiCall, updateMenuApiCall } from "../db/MenusApiCall";
 import { createNewPedidoApiCall } from "../db/PedidosApiCall";
 import { createNewInsumoApiCall, updateInsumoApiCall } from "../db/InsumoApiCall";
-import { createNewUserApiCall, updateUserApiCall } from "../db/UsuariosApiCall";
+import { createNewUserApiCall, updateUserApiCall } from "../db/usuariosApiCall";
 
 export const getCarritoConfirmacionMsg = async (pedido) => {
     const result = await Swal.fire({
