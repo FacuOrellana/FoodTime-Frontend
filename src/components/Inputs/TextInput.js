@@ -12,6 +12,30 @@ export const TextInput = ({ value, setValue, inputTitle, inputName, keyPressEven
     )
 }
 
+export const EmailInput = ({ value, setValue, inputTitle, inputName, keyPressEvent, placeholder, col, disabled, marginT }) => {
+    return (
+        <div className={`${marginT} col-md-6 col-sm-12 col-lg-${col ? col : '3'}`}>
+            <label className="text-gray-100 text-lg mb-1">{inputTitle}</label>
+            <input
+                type="email" data-testid="textbox" className="form-control required dni center-block" name={inputName} placeholder={placeholder}
+                value={value} onChange={(e) => setValue(e.target.value)} onKeyPress={keyPressEvent} disabled={disabled}
+            />
+        </div>
+    )
+}
+
+export const PasswordInput = ({ value, setValue, inputTitle, inputName, keyPressEvent, placeholder, col, disabled, marginT }) => {
+    return (
+        <div className={`${marginT} col-md-6 col-sm-12 col-lg-${col ? col : '3'}`}>
+            <label className="text-gray-100 text-lg mb-1">{inputTitle}</label>
+            <input
+                type="password" data-testid="textbox" className="form-control required dni center-block" name={inputName} placeholder={placeholder}
+                value={value} onChange={(e) => setValue(e.target.value)} onKeyPress={keyPressEvent} disabled={disabled}
+            />
+        </div>
+    )
+}
+
 export const TextInputWithHorizontalLabel = ({ value, setValue, inputTitle, inputName, keyPressEvent, placeholder, disabled }) => {
     return (
         <div className="row d-flex justify-content-center mt-4">
