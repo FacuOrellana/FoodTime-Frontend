@@ -196,7 +196,7 @@ export const EditarUsuario = () => {
                 className="w-48 bg-blue-600 text-gray-100 p-3 rounded-lg hover:bg-teal-400 hover:text-gray-900 ml-10"
                 onClick={editUser}
               >
-                <span className="text-xl">Editar Insumo</span>
+                <span className="text-xl">Editar Usuario</span>
               </button>
             </div>
           </div>
