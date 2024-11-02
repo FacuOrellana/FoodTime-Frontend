@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { SelectInput, TextInput, DateInput, EmailInput, PasswordInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
-import { getInsumoApiCall } from "../../db/InsumoApiCall";
 import {
   getUserEditConfirmacionMsg,
   getUserErrorMsg,
   getUserNotifyErrorDateMsg,
 } from "../../utils/messages";
 import { useNavigate } from "react-router-dom";
-import { getUserApiCall } from "../../db/UsuariosApiCall";
+import { getUserApiCall } from "../../db/usuariosApiCall";
 import { tipoUsuariosOptions } from "../../utils/options";
 
 export const EditarUsuario = () => {
@@ -26,9 +25,13 @@ export const EditarUsuario = () => {
   const [personaId, setPersonaId] = useState("");
 
   const navigate = useNavigate();
+  const hasFetched = useRef(false);
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (hasFetched.current) return; //  ya se ejecutó DETENGO
+      hasFetched.current = true; // Marco que ya se ejecuto
+
       try {
         const user = await getUserApiCall(id);
         setEmail(user.email);
@@ -41,7 +44,7 @@ export const EditarUsuario = () => {
         setDireccion(user.personaDto.direccion);
         const fechaFormateada = user.personaDto.fechaNacimiento.split("-").reverse().join("-");
         setFechaNacimiento(fechaFormateada);
-        setPersonaId(user.personaDto.id)
+        setPersonaId(user.personaDto.id);
       } catch (error) {
         console.error("Error fetching user:", error);
       }
@@ -193,7 +196,7 @@ export const EditarUsuario = () => {
                 className="w-48 bg-blue-600 text-gray-100 p-3 rounded-lg hover:bg-teal-400 hover:text-gray-900 ml-10"
                 onClick={editUser}
               >
-                <span className="text-xl">Editar Insumo</span>
+                <span className="text-xl">Editar Usuario</span>
               </button>
             </div>
           </div>
