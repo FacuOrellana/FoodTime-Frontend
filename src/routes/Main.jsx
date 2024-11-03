@@ -15,6 +15,7 @@ import { ListarPedidos } from "../pages/ListadoPedidos/ListarPedidos";
 import { ResumenPedido } from "../pages/ListadoPedidos/ResumenPedido";
 import NavbarLayout from "../components/Navbar/NavbarLayout";
 import Login from "../pages/Login";
+import Registro from "../pages/Registro";
 
 /* PAGES */
 import { PedidosPage } from "../pages/PedidosPage";
@@ -26,7 +27,8 @@ export const Main = () => {
       <BrowserRouter>
         <Routes>
           {/* Rutas que no utilizan NavbarLayout */}
-          <Route path="/login" element={<Login />} />                
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
           <Route path="/" element={<Login />} />
 
           {/* Rutas que utilizan NavbarLayout */}
