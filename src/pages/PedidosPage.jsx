@@ -177,10 +177,10 @@ export const PedidosPage = () => {
                   <div className="p-6 flex flex-col justify-between flex-grow">
                     <div>
                       <h1 className="title-font text-lg font-semibold text-gray-800 mb-3">
-                        Ver Pedidos por Fecha
+                        Ver Insumos por Fecha
                       </h1>
                       <p className="leading-relaxed mb-5">
-                        Consulta y organiza los pedidos según la fecha de solicitud o entrega. Optimiza la preparación en función de las fechas.
+                        ACTUALIZAR DESCRIPCION
                       </p>
                     </div>
                     <div className="mt-auto">
