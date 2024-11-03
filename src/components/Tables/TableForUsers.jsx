@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { getUserApiCall } from "../../db/usuariosApiCall";
 
 export const TableForUsers = ({ data, deleteUser }) => {
 
