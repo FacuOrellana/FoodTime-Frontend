@@ -4,6 +4,9 @@ import { Carrito } from "../pages/Carrito";
 import { CrearMenu } from "../pages/ConfiguracionMenus/CrearMenu";
 import { EditarMenu } from "../pages/ConfiguracionMenus/EditarMenu";
 import { GestionarMenus } from "../pages/ConfiguracionMenus/GestionarMenus";
+import { GestionarDietas } from "../pages/ConfiguracionDietas/GestionarDietas";
+import { CrearDieta } from "../pages/ConfiguracionDietas/CrearDieta";
+import { EditarDieta } from "../pages/ConfiguracionDietas/EditarDieta";
 import { CrearInsumo } from "../pages/ConfiguracionInsumos/CrearInsumo";
 import { EditarInsumo } from "../pages/ConfiguracionInsumos/EditarInsumo";
 import { GestionarInsumos } from "../pages/ConfiguracionInsumos/GestionarInsumos";
@@ -55,6 +58,11 @@ export const Main = () => {
             <Route path="/GestionarUsuarios" element={<GestionarUsuarios />} />
             <Route path="/GestionarUsuarios/Crear" element={<CrearUsuario />} />
             <Route path="/GestionarUsuarios/:id" element={<EditarUsuario />} />
+
+            {/* GESTION DE INSUMOS */}
+            <Route path="/GestionarDietas" element={<GestionarDietas />} />
+            <Route path="/GestionarDietas/Crear" element={<CrearDieta />} />
+            <Route path="/GestionarDietas/:id" element={<EditarDieta />} />
 
             <Route path="/ConsultarMenu" element={<ConsultarMenu />} />
 
