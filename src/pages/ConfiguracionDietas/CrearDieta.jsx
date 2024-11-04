@@ -11,13 +11,14 @@ import {
   getDietaErrorMsg,
 } from "../../utils/messages";
 import { getAllMenusApiCall } from "../../db/MenusApiCall";
+import { getAllPersonaApiCall } from "../../db/personaApiCall";
 import { tipoMenuOptions } from "../../utils/options";
 
 export const CrearDieta = () => {
-  const [personaId, setPersonaId] = useState("");
   const [detalle, setDetalle] = useState("");
   const [dietaMenu, setDietaMenu] = useState([]);
   const [menus, setMenus] = useState([]);
+  const [persona, setPersona] = useState([]);
   const [selectedMenuId, setSelectedMenuId] = useState("");
   const [tipoOptions, setTipoOptions] = useState("");
   const [diaMenu, setDiaMenu] = useState("");
@@ -28,18 +29,18 @@ export const CrearDieta = () => {
   };
 
   const [dieta, setDieta] = useState({
-    personaId: personaId,
+    persona: persona,
     detalle: detalle,
     dietaMenuList: dietaMenu,
   });
 
   useEffect(() => {
     setDieta({
-      personaId,
+      persona,
       detalle,
       dietaMenuList: dietaMenu,
     });
-  }, [personaId, detalle, dietaMenu]);
+  }, [persona, detalle, dietaMenu]);
 
   useEffect(() => {
     const obtenerMenus = async () => {
@@ -51,6 +52,16 @@ export const CrearDieta = () => {
       }));
       setMenus(formattedMenus);
     };
+    const obtenerPersona = async () => {
+      const persons = await getAllPersonaApiCall();
+      const formattedMenus = persons.map((persona) => ({
+        id: persona.id,
+        name: persona.nombre + " " + persona.apellido + " - " + persona.dni,
+        value: persona.id,
+      }));
+      setPersona(formattedMenus);
+    };
+    obtenerPersona();
     obtenerMenus();
   }, []);
 
@@ -77,7 +88,7 @@ export const CrearDieta = () => {
       disponibilidad: String(dieta.disponibilidad), // Asegúrate de que se envíe como string si es necesario
     };
 
-    personaId && detalle
+    persona && detalle
       ? getDietaConfirmacionMsg(finalDieta)
       : getDietaErrorMsg("Creacion");
   };
@@ -93,13 +104,13 @@ export const CrearDieta = () => {
       <div className="bg-gray-800 mt-10 rounded-lg">
         <div className="row p-3">
           <div className="col-6">
-            <TextInput
-              inputTitle={"Persona"}
-              value={personaId}
-              setValue={setPersonaId}
-              inputName={"personaDieta"}
+            <SelectInput
+              inputTitle={"Seleccionar Persona"}
+              value={persona.name}
+              setValue={persona.value}
+              dataOptions={persona}
+              inputName={"menuSelect"}
               col={12}
-              marginT={"mt-0"}
             />
           </div>
           <div className="col-6">

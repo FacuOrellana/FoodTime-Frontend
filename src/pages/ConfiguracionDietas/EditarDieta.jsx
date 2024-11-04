@@ -7,10 +7,11 @@ import { getDietaEditConfirmacionMsg, getDietaErrorMsg} from "../../utils/messag
 import { tipoMenuOptions } from "../../utils/options";
 import { useNavigate } from "react-router-dom";
 import { getAllMenusApiCall } from "../../db/MenusApiCall";
+import { getAllPersonaApiCall } from "../../db/personaApiCall";
 
 export const EditarDieta = () => {
   const { id } = useParams(); // Obtenemos el id del menú desde los parámetros de la URL
-  const [personaId, setPersonaId] = useState("");
+  const [persona, setPersona] = useState([]);
   const [detalle, setDetalle] = useState("");
   const [dietaMenu, setDietaMenu] = useState([]);
   const [menus, setMenus] = useState([]);
@@ -35,7 +36,7 @@ export const EditarDieta = () => {
       try {
         const dieta = await getDietaApiCall(id);
         console.log(dieta);
-        setPersonaId(dieta.personaId);
+        setPersona(dieta.personaId);
         setDetalle(dieta.detalle);
         setDietaMenu(dieta.dietaMenu);
         setMenus(dieta.menus);
@@ -58,6 +59,16 @@ export const EditarDieta = () => {
       }));
       setMenus(formattedMenus);
     };
+    const obtenerPersona = async () => {
+      const persons = await getAllPersonaApiCall();
+      const formattedMenus = persons.map((persona) => ({
+        id: persona.id,
+        name: persona.nombre + " " + persona.apellido + " - " + persona.dni,
+        value: persona.id,
+      }));
+      setPersona(formattedMenus);
+    };
+    obtenerPersona();
     obtenerMenus();
   }, []);
 
@@ -80,11 +91,11 @@ export const EditarDieta = () => {
   };
 
   const editMenu = () => {
-    const isValid = personaId && detalle;
+    const isValid = persona && detalle;
     if (isValid) {
       const menuData = {
         id, // Agregamos el id del menú
-        personaId,
+        persona,
         detalle,
         tipoMenu: tipoMenuOptions,
         dietaMenuList: dietaMenu,
@@ -107,14 +118,14 @@ export const EditarDieta = () => {
       <div className="bg-gray-800 mt-10 rounded-lg">
         <div className="row p-3">
           <div className="col-6">
-            <TextInput
-              inputTitle={"Persona"}
-              value={personaId}
-              setValue={setPersonaId}
-              inputName={"personaDieta"}
-              col={12}
-              marginT={"mt-0"}
-            />
+            <SelectInput
+                inputTitle={"Seleccionar Persona"}
+                value={persona.name}
+                setValue={persona.value}
+                dataOptions={persona}
+                inputName={"menuSelect"}
+                col={12}
+              />
           </div>
           <div className="col-6">
             <TextInput
