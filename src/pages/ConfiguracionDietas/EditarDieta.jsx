@@ -239,7 +239,7 @@ export const EditarDieta = () => {
 
       <div className="flex justify-center mt-10">
         <Link
-          to={"/GestionarMenus"}
+          to={"/GestionarDietas"}
           className="text-center w-48 bg-red-400 text-gray-100 p-3 rounded-lg hover:bg-orange-500 hover:text-gray-900"
         >
           <span className="text-xl">Cancelar</span>
