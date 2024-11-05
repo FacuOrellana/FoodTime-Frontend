@@ -212,7 +212,7 @@ export const EditarDieta = () => {
                             <td className="border-b border-gray-600 p-2">
                               {menuData
                                 ? menuData.name
-                                : "Insumo no encontrado"}
+                                : "Menu no encontrado"}
                             </td>
                             <td className="border-b border-gray-600 p-2">
                               {menu.cantidad}

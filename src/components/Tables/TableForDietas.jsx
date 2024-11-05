@@ -59,7 +59,7 @@ export const TableForDietas = ({ data, deleteMenu }) => {
                                 X
                             </button>
                             <Link
-                                to={`/GestionarMenus/${item.id}`}
+                                to={`/GestionarDietas/${item.id}`}
                                 className="bg-blue-500 text-white p-2 w-24 rounded-md"
                             >
                                 Editar
