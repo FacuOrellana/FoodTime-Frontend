@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { updateEstadoPedidoApiCall } from "../../db/PedidosApiCall";
 
 export const TableForOrderList = ({ data , onUpdateEstado }) => {
-    const headers = ['N° Pedido', 'Cliente', 'Estado', 'Hora de entrega', 'Metodo de pago', 'Cantidad de Menus', 'Total', 'Acciones'];
+    const headers = ['N° Pedido', 'Cliente', 'Estado', 'Ubicacion','Hora de entrega','Metodo de pago', 'Cantidad de Menus', 'Total', 'Acciones'];
 
     const [openDropdown, setOpenDropdown] = useState(null); // Almacena el id del dropdown abierto
     const estados = ['PENDIENTE', 'PREPARACION', 'ENTREGADO', 'CANCELADO'];
@@ -58,6 +57,9 @@ export const TableForOrderList = ({ data , onUpdateEstado }) => {
                                 <span className={getEstadoClass(item.estadoPedido)}>
                                     {item.estadoPedido}
                                 </span>
+                            </td>
+                            <td className="text-md text-gray-800 font-semibold px-8 py-4 text-center">
+                                {item.ubicacion}
                             </td>
                             <td className="text-md text-gray-800 font-semibold px-8 py-4 text-center">
                                 {item.tiempoEntrega ? new Date(item.tiempoEntrega).toLocaleString() : "INMEDIATO"}

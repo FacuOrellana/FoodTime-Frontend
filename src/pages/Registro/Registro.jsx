@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { DateInput } from "../../components/Inputs";
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import {createNewUserApiCall} from '../../db/usuariosApiCall'
 
 const getTodayDate = () => {
   const today = new Date();
@@ -18,12 +21,9 @@ export default function Registro() {
   const [password, setPassword] = useState("");
   const [repetirPassword, setRepetirPassword] = useState("");
   const [repetirPasswordVisible, setRepetirPasswordVisible] = useState(false);
-  
-  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
-  // const navigate = useNavigate();
-  // const { setUser } = useUser();
-  // setUser(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -33,22 +33,59 @@ export default function Registro() {
     setRepetirPasswordVisible(!repetirPasswordVisible);
   };
 
-  // const registrar = async (e) => {
-  //   e.preventDefault();
-  //   setUser(null);
-  //   try {
-  //     const response = await loginApiCall(email, password);
-  //     if (response.status === 200) {
-  //       const usuario = response.data.usuario;
-  //       setUser(usuario); // Establece el usuario en el contexto
-  //       navigate("/pedidos", { state: { email } });
-  //     } else {
-  //       setErrorMessage("Usuario o contraseña inválidos");
-  //     }
-  //   } catch (error) {
-  //     setErrorMessage("Error al iniciar sesión. Intente nuevamente.");
-  //   }
-  // };
+  const handleCrearUsuario = (e) => {
+    e.preventDefault();
+
+    let fechaFormateada = fechaNacimiento.split("-").reverse().join("-");
+
+    const personaDto = {
+      id:null,
+      dni,
+      nombre,
+      email,
+      numeroTelefono: telefono,
+      direccion,
+      fechaNacimiento: fechaFormateada
+    };
+
+    const usuarioDto = {
+      id:null,
+      email,
+      tipoUsuario: "PACIENTE",
+      personaDto: personaDto,
+      password
+    };
+    
+    email !== "" &&
+    password !== "" &&
+    dni !== "" &&
+    nombre !== "" &&
+    apellido !== "" &&
+    telefono !== "" &&
+    direccion !== "" &&
+    fechaNacimiento < getTodayDate() 
+      ? createNewUserApiCall(usuarioDto) //llamado a la api con el usuario
+      : getUserErrorMsg("registro"); //mostrar cartel de error en el registro
+
+      console.log(usuarioDto);
+
+      navigate("/"); //al final vuelvo a la ventana de login
+
+  };
+
+  const navigateToLogin = () => {
+    navigate("/");
+  };
+
+  const getUserErrorMsg = (contexto) => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error en el registro',
+      text: `Por favor, completa todos los campos requeridos para continuar con el ${contexto}.`,
+      confirmButtonText: 'Entendido',
+      confirmButtonColor: '#d33',
+    });
+  };
 
 
   return (
@@ -270,7 +307,15 @@ export default function Registro() {
 
             <div className="flex items-center justify-center mt-4 space-x-4">
               <button
+                type="button"
+                onClick={navigateToLogin}
+                className="inline-flex items-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 focus:bg-gray-700 active:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+              >
+                Volver
+              </button>
+              <button
                 type="submit"
+                onClick={handleCrearUsuario}
                 className="inline-flex items-center px-4 py-2 bg-[#f84525] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
               >
                 Crear usuario

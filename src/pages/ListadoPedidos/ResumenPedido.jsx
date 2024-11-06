@@ -54,6 +54,7 @@ export const ResumenPedido = () => {
               <DetallesPedidoTitleComponent title={'Detalles del Pedido'} />
               <hr style={{ color: 'white' }} />
               <DetallesPedidoComponent title={'Usuario'} value={pedido.nombrePersona} />
+              <DetallesPedidoComponent title={'Ubicacion'} value={pedido.ubicacion} />
               <DetallesPedidoComponent   title={'Fecha de Pedido'} value={pedido.tiempoEntrega ? new Date(pedido.tiempoEntrega).toLocaleString() : "INMEDIATO"}/>
               <DetallesPedidoComponent title={'Total a Pagar'} value={pedido.total} />
 
