@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { TableForDietas } from "../../components/Tables/TableForDietas";
@@ -24,12 +25,25 @@ export const GestionarDietas = () => {
   }, [fetchDietas]);
 
   const deleteDieta = async (id) => {
-    try {
-      await deleteDietaApiCall(id);
-      setDietas((prevDietas) => prevDietas.filter((dieta) => dieta.id !== id));
-    } catch (error) {
-      console.error("Error deleting dieta:", error);
-    }
+        const result = await Swal.fire({
+          icon: "info",
+          title: "¿Está seguro?",
+          showDenyButton: true,
+          confirmButtonText: "Confirmar",
+          denyButtonText: "Cancelar",
+      });
+      if (result.isConfirmed) {
+          try {
+            await deleteDietaApiCall(id);
+            setDietas((prevDietas) => prevDietas.filter((dieta) => dieta.id !== id));
+          } catch (error) {
+            console.error("Error deleting dieta:", error);
+          }
+          Swal.fire("Dieta eliminada con éxito!", "", "success");
+      } else if (result.isDenied) {
+          Swal.fire("Eliminación de dieta cancelada", "", "error");
+      }
+
   };
 
   return (

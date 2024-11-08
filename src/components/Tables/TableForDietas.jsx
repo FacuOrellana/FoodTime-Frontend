@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const TableForDietas = ({ data, deleteMenu }) => {
+export const TableForDietas = ({ data, deleteDieta }) => {
 
     const headers = ['Id', 'Nombre y Apellido', 'Email', 'DNI', 'Detalle', 'Acciones'];
 
@@ -54,7 +54,7 @@ export const TableForDietas = ({ data, deleteMenu }) => {
                         <td className="flex justify-center border-none mt-1">
                             <button
                                 className="bg-red-600 text-white p-2 w-14 rounded-md mr-5"
-                                onClick={() => deleteMenu(item.id)}
+                                onClick={() => deleteDieta(item.id)}
                             >
                                 X
                             </button>
