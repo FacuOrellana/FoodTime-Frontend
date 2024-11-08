@@ -16,11 +16,17 @@ export const Carrito = ({ history }) => {
   const [metodoPago, setMetodoPago] = useState("EFECTIVO");
   const [tiempoEntrega, setTiempoEntrega] = useState("");
   const [ubicacion, setUbicacion] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [dni, setDni] = useState("");
+  const [email, setEmail] = useState("");
+  const [numeroTelefono, setNumeroTelefono] = useState("");
 
   useEffect(() => {
     let menuItems = localStorage.getItem("lineaPedido") || "[]";
     menuItems = JSON.parse(menuItems);
     setLineasPedidos(menuItems);
+    console.log(user);
 
     let articulosTotales = 0;
     let total = 0;
@@ -68,10 +74,7 @@ export const Carrito = ({ history }) => {
     }));
 
     const idPersona = user?.personaDto?.id;
-    // Convertir `tiempoEntrega` a LocalDateTime o asignarlo a null si es "INMEDIATO"
     let tiempoEntregaFormato = null;
-
-    console.log("Tiempo entrega: " + tiempoEntrega);
     if (tiempoEntrega && tiempoEntrega !== "INMEDIATO") {
       try {
         const today = new Date();
@@ -102,6 +105,22 @@ export const Carrito = ({ history }) => {
       }
     }
 
+    let pedidoExtra;
+
+    if (user != null){
+      pedidoExtra = null;
+    }
+    else{
+      pedidoExtra = {
+        id:null,
+        nombre: nombre,
+        apellido: apellido,
+        dni: dni,
+        numeroTelefono: numeroTelefono,
+        email: email
+      }
+    }
+
     let pedidoDto = {
       id: null,
       tiempoEntrega: tiempoEntregaFormato,
@@ -110,9 +129,9 @@ export const Carrito = ({ history }) => {
       total: totalPedido,
       personaId: idPersona,
       pedidoMenuList: arrayBack,
+      extra: pedidoExtra,
       estadoPedido: "PENDIENTE"
     };
-    console.log(user);
     console.log(pedidoDto);
     setPedido(pedidoDto);
     getCarritoConfirmacionMsg(pedidoDto);
@@ -184,6 +203,62 @@ export const Carrito = ({ history }) => {
           </div>
         </div>
       </div>
+      {user === null && (
+          <>
+
+      {/* Separador de sección */}
+      <div className="w-full border-t border-gray-300 mt-6 mb-4"></div>
+        
+        {/* Datos personales */}
+        <h2 className="text-lg font-semibold text-gray-700">Datos personales</h2>
+        <div className="grid grid-cols-3 gap-4 w-full max-w-20xl mt-4">
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Nombre:</label>
+            <input
+              type="text"
+              className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Apellido:</label>
+            <input
+              type="text"
+              className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
+              value={apellido}
+              onChange={(e) => setApellido(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">DNI:</label>
+            <input
+              type="text"
+              className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
+              value={dni}
+              onChange={(e) => setDni(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Email:</label>
+            <input
+              type="email"
+              className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium mb-2">Número de Teléfono:</label>
+            <input
+              type="text"
+              className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
+              value={numeroTelefono}
+              onChange={(e) => setNumeroTelefono(e.target.value)}
+            />
+          </div>
+        </div>
+        </>)}
       <div className="flex justify-between mt-16 bg-teal-800 p-3 text-white rounded-lg">
         <div className="flex justify-between">
           <h1 className="mt-2 text-xl">
@@ -199,6 +274,8 @@ export const Carrito = ({ history }) => {
             </span>
           </h1>
         </div>
+        
+
         <div className="flex justify-end">
           <Link to={"/RealizarPedido"}>
             <button className="ml-10 inline-flex justify-center rounded-md border border-transparent bg-red-600 text-gray-100 py-2 px-5 text-sm font-medium buttonStyleCustom hover:bg-orange-500 hover:text-gray-900"

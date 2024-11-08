@@ -75,7 +75,7 @@ export const PedidosPage = () => {
               </div>
             </div>
 
-            <div className="p-4 md:w-1/3">
+            {user != null && (<div className="p-4 md:w-1/3">
               <div className="h-full flex flex-col justify-between rounded-xl shadow-lg bg-gradient-to-r from-pink-100 to-orange-200 overflow-hidden">
                 <img
                   className="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
@@ -101,7 +101,37 @@ export const PedidosPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div>)}
+
+
+            { user == null && (<div className="p-4 md:w-1/3">
+              <div className="h-full flex flex-col justify-between rounded-xl shadow-lg bg-gradient-to-r from-pink-100 to-orange-200 overflow-hidden">
+                <img
+                  className="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
+                  src="https://cdn.pixabay.com/photo/2017/08/07/23/32/office-2609180_1280.jpg"
+                  alt="mis pedidos"
+                />
+                <div className="p-6 flex flex-col justify-between flex-grow">
+                  <div>
+                    <h1 className="title-font text-lg font-semibold text-gray-800 mb-3">
+                      Buscar pedido
+                    </h1>
+                    <p className="leading-relaxed mb-5">
+                      Revisa el historial de tus pedidos realizados, con detalles de cada uno, incluyendo el estado del pedido.
+                    </p>
+                  </div>
+                  <div className="mt-auto">
+                    <button
+                      className="bg-gradient-to-r from-pink-400 to-orange-500 hover:scale-105 text-white px-4 py-2 rounded-lg transition-transform duration-300 inline-flex"
+                      onClick={() => navigate("/PedidosByDni")} 
+                    >
+                      Ir
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>)}
+            
 
             {/* Card 4: Gestionar Menús */}
             {hasPermission("COCINA") && (

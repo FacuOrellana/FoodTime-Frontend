@@ -21,6 +21,8 @@ import Registro from "../pages/Registro";
 /* PAGES */
 import { PedidosPage } from "../pages/PedidosPage";
 import { RealizarPedido } from "../pages/RealizarPedido";
+import { PedidosByDni } from "../pages/Reportes/PedidosByDni";
+import { InsumosPorFecha } from "../pages/Reportes/InsumosPorFecha";
 
 export const Main = () => {
   return (
@@ -62,7 +64,8 @@ export const Main = () => {
             {/* SECCION DE REPORTES */ }
             
             <Route path="/PedidosByPersona/:id" element={<PedidosByPersona />} />
-
+            <Route path="/PedidosByDni" element={<PedidosByDni />} />
+            <Route path="/VerInsumosPorFecha" element={<InsumosPorFecha />} />
 
           </Route>
         </Routes>

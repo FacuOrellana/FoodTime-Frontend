@@ -14,11 +14,24 @@ export const ListarPedidos = () => {
         const pedidosData = await getAllPedidosApiCall();
         const pedidosConPersonas = await Promise.all(
           pedidosData.map(async (pedido) => {
-            const persona = await getOnePersonaApiCall(pedido.personaId);
-            const personaNombreCompleto = `${persona.data.nombre} ${persona.data.apellido}`;
+            let personaNombreCompleto;
+            let persona;
+            let dni;
+            if(pedido.personaId == null){
+              persona = pedido.extra;
+              dni = persona.dni;
+              personaNombreCompleto = `${persona.nombre} ${persona.apellido}`;
+            }
+            else{
+              persona = await getOnePersonaApiCall(pedido.personaId);
+              personaNombreCompleto = `${persona.data.nombre} ${persona.data.apellido}`;
+              dni = persona.data.dni;
+            }           
+            
             return {
               ...pedido,
-              personaNombreCompleto // Agrega el nombre completo al pedido
+              personaNombreCompleto,
+              dni // Agrega el nombre completo al pedido
             };
           })
         );

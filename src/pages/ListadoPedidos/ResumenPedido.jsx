@@ -16,8 +16,18 @@ export const ResumenPedido = () => {
     const fetchData = async () => {
       try {
         const data = await getPedidoApiCall(id);
-        const persona = await getOnePersonaApiCall(data.personaId);
-        const personaNombreCompleto = `${persona.data.nombre} ${persona.data.apellido}`;
+        let personaNombreCompleto;
+        let persona;
+        if (data.personaId == null) {
+          persona = data.extra;
+          personaNombreCompleto = `${persona.nombre} ${persona.apellido}`;
+        }
+        else {
+          persona = await getOnePersonaApiCall(data.personaId);
+          personaNombreCompleto = `${persona.data.nombre} ${persona.data.apellido}`;
+        }
+
+        
 
         setPedido({
           ...data,
