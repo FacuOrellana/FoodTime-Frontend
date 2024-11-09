@@ -23,6 +23,7 @@ export const getPedidosByDniApiCall = async (dni) => {
 
     
 };
+
 export const getInsumosPorFechaApiCall = async (fechaInicio, fechaFin) => {
     console.log(fechaInicio);
     console.log(fechaFin);
@@ -40,4 +41,14 @@ export const getInsumosPorFechaApiCall = async (fechaInicio, fechaFin) => {
         console.error('Error:', error);
         throw error;  // Lanza el error para que pueda ser manejado en otro lugar
     }
+};
+
+
+export const getEmpleadosPedidosApiCall = async () => {
+    try {
+        const response = await axios.get(rootApiRoute + "/reportes/empleadosPedidos");
+        return response;
+    } catch (error) {
+        throw error;
+    }    
 };

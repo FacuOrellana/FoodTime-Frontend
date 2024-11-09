@@ -317,6 +317,37 @@ export const PedidosPage = () => {
               </div>
             )}
 
+            {/* Módulo: Ver insumos por fecha */}
+            {hasPermission("COCINA") && (
+              <div className="p-4 md:w-1/3">
+                <div className="h-full flex flex-col justify-between rounded-xl shadow-lg bg-gradient-to-r from-blue-100 to-sky-200 overflow-hidden">
+                  <img
+                    className="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
+                    src="https://cdn.pixabay.com/photo/2020/10/14/07/18/woman-5653501_1280.jpg"
+                    alt="ver insumos por fecha"
+                  />
+                  <div className="p-6 flex flex-col justify-between flex-grow">
+                    <div>
+                      <h1 className="title-font text-lg font-semibold text-gray-800 mb-3">
+                        Ver pedidos en cuenta corriente
+                      </h1>
+                      <p className="leading-relaxed mb-5">
+                        En este modulo se podran ver los pedidos realizados en cuenta corriente por los empleados del sanatorio, lo que permitira al personal de cocina informar al area de administracion que empleados optaron por agregar un pedido a su cuenta corriente.
+                       </p>
+                    </div>
+                    <div className="mt-auto">
+                      <button
+                        className="bg-gradient-to-r from-blue-400 to-sky-500 hover:scale-105 text-white px-4 py-2 rounded-lg transition-transform duration-300 inline-flex"
+                        onClick={() => navigate("/VerEmpleadosPedidos")}
+                      >
+                        Ir
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
 
           </div>
         </div>
