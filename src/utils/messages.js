@@ -131,7 +131,7 @@ export const getUserConfirmacionMsg = async (usuario) => {
         await createNewUserApiCall(usuario); // Espera la llamada a la API
         Swal.fire("usuario creado con éxito!", "", "success");
     } else if (result.isDenied) {
-        Swal.fire("Creación de usuario cancelado", "", "error");
+        Swal.fire("Creación de usuario cancelada", "", "error");
     }
 
     return result; // Devuelve el resultado para manejar la redirección

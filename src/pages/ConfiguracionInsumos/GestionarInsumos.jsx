@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { TableForInsumos } from "../../components/Tables/TableForInsumos";
@@ -24,12 +25,25 @@ export const GestionarInsumos = () => {
   }, [fetchInsumos]);
 
   const deleteInsumo = async (id) => {
-    try {
-      await deleteInsumoApiCall(id);
-      setInsumos((prevInsumos) => prevInsumos.filter((insumo) => insumo.id !== id));
-    } catch (error) {
-      console.error("Error deleting inputs:", error);
-    }
+      const result = await Swal.fire({
+        icon: "info",
+        title: "¿Está seguro?",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: "Cancelar",
+    });
+    if (result.isConfirmed) {
+      try {
+        await deleteInsumoApiCall(id);
+        setInsumos((prevInsumos) => prevInsumos.filter((insumo) => insumo.id !== id));
+      } catch (error) {
+        console.error("Error deleting inputs:", error);
+      }
+      Swal.fire("Insumo eliminado con éxito!", "", "success");
+  } else if (result.isDenied) {
+      Swal.fire("Eliminación de insumo cancelado", "", "error");
+  }
+
   };
 
   return (

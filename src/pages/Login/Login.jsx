@@ -8,11 +8,11 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  
+
 
   const navigate = useNavigate();
   const { setUser } = useUser();
-  setUser(null); 
+  setUser(null);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -34,8 +34,8 @@ const LoginForm = () => {
       setErrorMessage("Error al iniciar sesión. Intente nuevamente.");
     }
   };
-  
-  
+
+
 
   const navigateAsGuest = () => {
     setUser(null);
@@ -116,33 +116,47 @@ const LoginForm = () => {
                     </svg>
                   </button>
                 </div>
+                <div className="mt-2 text-sm text-gray-600 text-center">
+                  <a
+                    href="mailto:support@foodtime.com"
+                    className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    ¿Olvidaste la contraseña?
+                  </a>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-end mt-4 space-x-4">
-              <button
-                type="button"
-                onClick={navigateAsGuest}
-                className="text-sm text-gray-600 hover:text-gray-900 hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Ingresar como invitado
-              </button>
+            <div className="space-y-4 mt-4">
+              <div className="flex items-center justify-center space-x-4">
+                <button
+                  type="button"
+                  onClick={navigateToRegister}
+                  className="inline-flex items-center px-4 py-2 bg-[#f84525] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                >
+                  Registrarse
+                </button>
 
-              <button
-                type="button"
-                onClick={navigateToRegister}
-                className="inline-flex items-center px-4 py-2 bg-[#f84525] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-              >
-                Registrarse
-              </button>
+                <button
+                  type="submit"
+                  className="inline-flex items-center px-4 py-2 bg-[#f84525] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                >
+                  Iniciar sesión
+                </button>
+              </div>
 
-              <button
-                type="submit"
-                className="inline-flex items-center px-4 py-2 bg-[#f84525] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-              >
-                Iniciar sesión
-              </button>
+              <div className="flex justify-center">
+                <button
+                  type="button"
+                  onClick={navigateAsGuest}
+                  className="text-sm text-gray-600 hover:text-gray-900 hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Ingresar como invitado
+                </button>
+              </div>
             </div>
+
+
           </form>
         </div>
       </div>

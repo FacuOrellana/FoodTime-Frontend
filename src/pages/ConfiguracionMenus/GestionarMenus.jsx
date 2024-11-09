@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { TableForMenus } from "../../components/Tables/TableForMenus";
@@ -24,12 +25,26 @@ export const GestionarMenus = () => {
   }, [fetchMenus]);
 
   const deleteMenu = async (id) => {
-    try {
-      await deleteMenuApiCall(id);
-      setMenus((prevMenus) => prevMenus.filter((menu) => menu.id !== id));
-    } catch (error) {
-      console.error("Error deleting menu:", error);
+      const result = await Swal.fire({
+        icon: "info",
+        title: "¿Está seguro?",
+        showDenyButton: true,
+        confirmButtonText: "Confirmar",
+        denyButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+        try {
+          await deleteMenuApiCall(id);
+          setMenus((prevMenus) => prevMenus.filter((menu) => menu.id !== id));
+        } catch (error) {
+          console.error("Error deleting menu:", error);
+        }
+        Swal.fire("Menú eliminado con éxito!", "", "success");
+    } else if (result.isDenied) {
+        Swal.fire("Eliminación de menú cancelada", "", "error");
     }
+    
   };
 
   return (

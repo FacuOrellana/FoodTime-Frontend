@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { TableForUsers } from "../../components/Tables/TableForUsers";
@@ -24,12 +25,25 @@ export const GestionarUsuarios = () => {
   }, [fetchUsers]);
 
   const deleteUser = async (id) => {
+    const result = await Swal.fire({
+      icon: "info",
+      title: "¿Está seguro?",
+      showDenyButton: true,
+      confirmButtonText: "Confirmar",
+      denyButtonText: "Cancelar",
+  });
+  if (result.isConfirmed) {
     try {
       await deleteUserApiCall(id);
       setUser((prevInsumos) => prevInsumos.filter((user) => user.id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
     }
+    Swal.fire("Usuario eliminado con éxito!", "", "success");
+} else if (result.isDenied) {
+    Swal.fire("Eliminación de usuario cancelada", "", "error");
+}
+
   };
 
   return (

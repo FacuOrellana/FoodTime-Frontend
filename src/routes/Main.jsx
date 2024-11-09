@@ -16,6 +16,8 @@ import { EditarUsuario } from "../pages/ConfiguracionUsuarios/EditarUsuario";
 import { ConsultarMenu } from "../pages/ConfiguracionMenus/ConsultarMenu";
 import { ListarPedidos } from "../pages/ListadoPedidos/ListarPedidos";
 import { ResumenPedido } from "../pages/ListadoPedidos/ResumenPedido";
+import { PedidosByPersona } from "../pages/Reportes/PedidosByPersona"
+import { EmpleadosPedidos } from "../pages/Reportes/EmpleadosPedidos"
 import NavbarLayout from "../components/Navbar/NavbarLayout";
 import Login from "../pages/Login";
 import Registro from "../pages/Registro";
@@ -23,6 +25,8 @@ import Registro from "../pages/Registro";
 /* PAGES */
 import { PedidosPage } from "../pages/PedidosPage";
 import { RealizarPedido } from "../pages/RealizarPedido";
+import { PedidosByDni } from "../pages/Reportes/PedidosByDni";
+import { InsumosPorFecha } from "../pages/Reportes/InsumosPorFecha";
 
 export const Main = () => {
   return (
@@ -65,6 +69,13 @@ export const Main = () => {
             <Route path="/GestionarDietas/:id" element={<EditarDieta />} />
 
             <Route path="/ConsultarMenu" element={<ConsultarMenu />} />
+
+            {/* SECCION DE REPORTES */ }
+            
+            <Route path="/PedidosByPersona/:id" element={<PedidosByPersona />} />
+            <Route path="/PedidosByDni" element={<PedidosByDni />} />
+            <Route path="/VerInsumosPorFecha" element={<InsumosPorFecha />} />
+            <Route path="/VerEmpleadosPedidos" element={<EmpleadosPedidos />} />
 
           </Route>
         </Routes>
