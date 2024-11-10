@@ -1,25 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  DateInputMin,
-  SelectInput,
-  TextInput,
-} from "../../components/Inputs";
+import { DateInputMin, SelectInput, TextInput, } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
-import {
-  getDietaConfirmacionMsg,
-  getDietaErrorMsg,
-} from "../../utils/messages";
+import { getDietaConfirmacionMsg, getDietaErrorMsg, } from "../../utils/messages";
 import { getAllMenusApiCall } from "../../db/MenusApiCall";
 import { getAllPersonaApiCall } from "../../db/personaApiCall";
 import { tipoMenuOptions } from "../../utils/options";
 
 export const CrearDieta = () => {
-  const [detalle, setDetalle] = useState("");
+  const [detalles, setDetalle] = useState("");
   const [dietaMenu, setDietaMenu] = useState([]);
   const [menus, setMenus] = useState([]);
   const [persona, setPersona] = useState([]);
   const [selectedMenuId, setSelectedMenuId] = useState("");
+  const [selectedPersona, setSelectedPersona] = useState(null);
   const [tipoOptions, setTipoOptions] = useState("");
   const [diaMenu, setDiaMenu] = useState("");
 
@@ -29,25 +23,26 @@ export const CrearDieta = () => {
   };
 
   const [dieta, setDieta] = useState({
-    persona: persona,
-    detalle: detalle,
+    persona: selectedPersona,
+    detalles: detalles,
     dietaMenuList: dietaMenu,
   });
 
   useEffect(() => {
     setDieta({
-      persona,
-      detalle,
+      id: null,
+      personaId: selectedPersona,
+      detalles,
       dietaMenuList: dietaMenu,
     });
-  }, [persona, detalle, dietaMenu]);
+  }, [persona, detalles, dietaMenu]);
 
   useEffect(() => {
     const obtenerMenus = async () => {
       const data = await getAllMenusApiCall();
       const formattedMenus = data.map((menu) => ({
         id: menu.id,
-        name: menu.tipoMenu,
+        name: menu.titulo,
         value: menu.id,
       }));
       setMenus(formattedMenus);
@@ -56,7 +51,7 @@ export const CrearDieta = () => {
       const persons = await getAllPersonaApiCall();
       const formattedMenus = persons.map((persona) => ({
         id: persona.id,
-        name: persona.nombre + " " + persona.apellido + " - " + persona.dni,
+        name: persona.nombre + " " + persona.apellido,
         value: persona.id,
       }));
       setPersona(formattedMenus);
@@ -68,8 +63,11 @@ export const CrearDieta = () => {
   const agregarMenu = () => {
     if (selectedMenuId && diaMenu && tipoMenuOptions) {
       const nuevoDietaMenu = {
+        id:null,
         dietaId: null,
         menuId: selectedMenuId,
+        dia: diaMenu,
+        tipoMenu: tipoOptions
       };
       setDietaMenu((prevDietaMenu) => [...prevDietaMenu, nuevoDietaMenu]);
       setSelectedMenuId("");
@@ -82,14 +80,9 @@ export const CrearDieta = () => {
   };
 
   const crearDieta = () => {
-    // Asegúrate de que el valor de disponibilidad se envíe correctamente
-    const finalDieta = {
-      ...dieta,
-      disponibilidad: String(dieta.disponibilidad), // Asegúrate de que se envíe como string si es necesario
-    };
-
-    persona && detalle
-      ? getDietaConfirmacionMsg(finalDieta)
+    console.log(dieta);
+    persona && detalles
+      ? getDietaConfirmacionMsg(dieta)
       : getDietaErrorMsg("Creacion");
   };
 
@@ -106,17 +99,17 @@ export const CrearDieta = () => {
           <div className="col-6">
             <SelectInput
               inputTitle={"Seleccionar Persona"}
-              value={persona.name}
-              setValue={persona.value}
-              dataOptions={persona}
-              inputName={"menuSelect"}
+              value={selectedPersona} // El valor seleccionado
+              setValue={setSelectedPersona} // La función para actualizar el valor seleccionado
+              dataOptions={persona} // Array de opciones de personas
+              inputName={"personaSelect"}
               col={12}
             />
           </div>
           <div className="col-6">
             <TextInput
               inputTitle={"Detalle"}
-              value={detalle}
+              value={detalles}
               setValue={setDetalle}
               inputName={"detalleDieta"}
               col={12}
@@ -181,7 +174,10 @@ export const CrearDieta = () => {
                           Menu
                         </th>
                         <th className="border-b border-gray-600 p-2 text-left">
-                          Cantidad
+                          Tipo Menu
+                        </th>
+                        <th className="border-b border-gray-600 p-2 text-left">
+                          Dia
                         </th>
                         <th className="border-b border-gray-600 p-2 text-left">
                           Acciones
@@ -201,7 +197,10 @@ export const CrearDieta = () => {
                                 : "Insumo no encontrado"}
                             </td>
                             <td className="border-b border-gray-600 p-2">
-                              {menu.cantidad}
+                              {menu.tipoMenu}
+                            </td>
+                            <td className="border-b border-gray-600 p-2">
+                              {menu.dia}
                             </td>
                             <td className="border-b border-gray-600 p-2">
                               <button

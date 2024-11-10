@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { TableForDietas } from "../../components/Tables/TableForDietas";
 import { getAllDietasApiCall, deleteDietaApiCall } from "../../db/DietasApiCall";
+import { getOnePersonaApiCall } from "../../db/personaApiCall";
 
 export const GestionarDietas = () => {
   const [dietas, setDietas] = useState([]);
@@ -10,15 +11,31 @@ export const GestionarDietas = () => {
 
   // Function to load dietas only once
   const fetchDietas = useCallback(async () => {
+    setLoading(true); // Asegúrate de establecer `loading` en `true` al inicio
     try {
       const data = await getAllDietasApiCall();
-      setDietas(data);
+      
+      const dietasConPersona = await Promise.all(
+        data.map(async (dieta) => {
+          const persona = await getOnePersonaApiCall(dieta.personaId);
+          const personaNombreCompleto = `${persona.data.nombre} ${persona.data.apellido}`;
+          
+          return {
+            ...dieta,
+            personaNombreCompleto,
+          };
+        })
+      );
+  
+      setDietas(dietasConPersona); // Asigna el array transformado
+      console.log(dietasConPersona);
     } catch (error) {
       console.error("Error fetching dietas:", error);
     } finally {
       setLoading(false);
     }
   }, []);
+  
 
   useEffect(() => {
     fetchDietas();

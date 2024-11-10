@@ -2,22 +2,7 @@ import { Link } from "react-router-dom";
 
 export const TableForDietas = ({ data, deleteDieta }) => {
 
-    const headers = ['Id', 'Nombre y Apellido', 'Email', 'DNI', 'Detalle', 'Acciones'];
-
-        // Agregar un elemento de prueba al array de datos
-        // const testData = [
-        //     ...data,
-        //     {
-        //         id: 1,  // ID ficticio para la fila de prueba
-        //         personaDto: {
-        //             nombre: "John",
-        //             apellido: "Doe",
-        //             email: "john.doe@example.com",
-        //             dni: "12345678"
-        //         },
-        //         detalle: "Descripcion 1",
-        //     }
-        // ];
+    const headers = ['Id', 'Nombre y Apellido', 'Detalle', 'Acciones'];
 
     return (
         <table className="table border text-center">
@@ -40,16 +25,10 @@ export const TableForDietas = ({ data, deleteDieta }) => {
                             {item.id}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.personaDto.nombre} {item.personaDto.apellido}
+                            {item.personaNombreCompleto}
                         </td>
                         <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.personaDto.email}
-                        </td>
-                        <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.personaDto.dni}
-                        </td>
-                        <td className="text-md text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
-                            {item.detalle}
+                            {item.detalles}
                         </td>
                         <td className="flex justify-center border-none mt-1">
                             <button

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { loginApiCall } from "../../db/usuariosApiCall";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/userContext";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -41,6 +42,11 @@ const LoginForm = () => {
     setUser(null);
     navigate("/pedidos");
   };
+
+  const recuperarContraseña = () => {
+    navigate("/recuperar-contraseña");
+  };
+
 
   const navigateToRegister = () => {
     navigate("/registro");
@@ -116,14 +122,6 @@ const LoginForm = () => {
                     </svg>
                   </button>
                 </div>
-                <div className="mt-2 text-sm text-gray-600 text-center">
-                  <a
-                    href="mailto:support@foodtime.com"
-                    className="hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    ¿Olvidaste la contraseña?
-                  </a>
-                </div>
               </div>
             </div>
 
@@ -149,10 +147,29 @@ const LoginForm = () => {
                 <button
                   type="button"
                   onClick={navigateAsGuest}
-                  className="text-sm text-gray-600 hover:text-gray-900 hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex items-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 focus:bg-gray-700 active:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                 >
                   Ingresar como invitado
                 </button>
+              </div>
+
+              <div className="mt-3 text-sm text-gray-600 text-center">
+                <button
+                  type="button"
+                  onClick={recuperarContraseña}
+                  className="hover:underline cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  ¿Olvidaste la contraseña?
+                </button>
+              </div>
+
+
+
+              <div className="mt-3 text-sm text-gray-600 text-center">
+                <a
+                  href="mailto:support@foodtime.com">
+                  Si necesitas ayuda contactate con nosotros
+                </a>
               </div>
             </div>
 
