@@ -66,3 +66,32 @@ export const updateUserApiCall = async (id, usuario) => {
         throw error;
     }
 }
+
+export const recuperarContraseñaApiCall = async (email) => {
+    try {
+      const response = await axios.post(rootApiRoute + "/usuarios/recuperar-contraseña", {
+        email: email // Enviar el email como parte del cuerpo de la solicitud
+      });
+      return response;
+    } catch (error) {
+      throw error; // Re-lanzamos el error para que sea manejado por el que llama esta función
+    }
+  }
+
+  
+  export const nuevaContraseñaApiCall = async (userId, nuevaContraseña) => {
+    try {
+      const response = await axios.post(rootApiRoute + "/usuarios/nueva-contraseña", {
+        userId: userId,
+        nuevaContraseña: nuevaContraseña
+      }, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+  
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  

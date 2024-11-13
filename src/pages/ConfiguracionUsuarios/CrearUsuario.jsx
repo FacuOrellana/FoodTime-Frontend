@@ -101,7 +101,7 @@ export const CrearUsuario = () => {
                 marginT={"mt-4"}
               />
             <PasswordInput
-                inputTitle={"Password"}
+                inputTitle={"Contraseña"}
                 value={password}
                 setValue={setPassword}
                 inputName={"passwordUser"}

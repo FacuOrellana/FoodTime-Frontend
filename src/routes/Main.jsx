@@ -19,6 +19,7 @@ import { ResumenPedido } from "../pages/ListadoPedidos/ResumenPedido";
 import { PedidosByPersona } from "../pages/Reportes/PedidosByPersona"
 import { EmpleadosPedidos } from "../pages/Reportes/EmpleadosPedidos"
 import RecuperarContraseña from '../pages/Registro/RecuperarContraseña';
+import NuevaContraseña from '../pages/Registro/NuevaContraseña';
 
 import NavbarLayout from "../components/Navbar/NavbarLayout";
 import Login from "../pages/Login";
@@ -41,6 +42,8 @@ export const Main = () => {
           <Route path="/" element={<Login />} />
 
           <Route path="/recuperar-contraseña" element={<RecuperarContraseña />} />
+          <Route path="/nueva-contrasena" element={<NuevaContraseña />} />
+
 
           {/* Rutas que utilizan NavbarLayout */}
           <Route element={<NavbarLayout />}>

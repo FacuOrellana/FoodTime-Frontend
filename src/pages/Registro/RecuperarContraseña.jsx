@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { recuperarContraseñaApiCall } from "../../db/usuariosApiCall";
 
 const RecuperarContraseña = () => {
   const [email, setEmail] = useState("");
@@ -9,22 +10,29 @@ const RecuperarContraseña = () => {
     e.preventDefault();
     setMensaje(""); // Limpiar mensaje anterior
     setErrorMessage(""); // Limpiar error anterior
-
+  
     // Validar el email
     if (!email) {
       setErrorMessage("Por favor ingresa un correo electrónico.");
       return;
     }
-
-    // Simular la llamada a la API para enviar el correo de recuperación
+  
     try {
-      // Aquí puedes integrar la lógica real para enviar el correo, como llamar a una API
-      // Suponiendo que todo salió bien
-      setMensaje("¡Correo de recuperación enviado con éxito! Revisa tu bandeja de entrada y la carpeta de spam");
+      const response = await recuperarContraseñaApiCall(email);
+  
+      // Si la respuesta de la API es exitosa, muestra el mensaje correspondiente
+      if (response.status === 200) {
+        setMensaje(response.data); // Mensaje de éxito desde la API
+      } else {
+        setErrorMessage("Hubo un error al intentar enviar el correo. Intenta nuevamente.");
+      }
     } catch (error) {
-      setErrorMessage("Hubo un error al intentar enviar el correo. Intenta nuevamente.");
+      // Si ocurre un error en la llamada a la API, muestra el mensaje de error desde la API
+      setErrorMessage(error.response?.data || "Hubo un error al intentar enviar el correo. Intenta nuevamente.");
     }
   };
+  
+  
 
   return (
     <div className="font-sans text-gray-900 antialiased">

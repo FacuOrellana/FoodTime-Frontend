@@ -101,7 +101,7 @@ export const InsumosPorFecha = () => {
                 onClick={() => navigate("/pedidos")}
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
             >
-                Volver a Reportes
+                Volver al menu principal
             </button>
         </div>
     );

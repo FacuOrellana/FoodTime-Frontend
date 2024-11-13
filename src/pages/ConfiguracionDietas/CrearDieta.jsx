@@ -90,7 +90,7 @@ export const CrearDieta = () => {
     <section className="p-4">
       <PageTitles
         title={"Gestion de Dietas"}
-        subtitle={"Agregar Nueva Dieta"}
+        subtitle={"Crear Dieta"}
         color={"text-indigo-400"}
       />
 
@@ -108,7 +108,7 @@ export const CrearDieta = () => {
           </div>
           <div className="col-6">
             <TextInput
-              inputTitle={"Detalle"}
+              inputTitle={"Detalles"}
               value={detalles}
               setValue={setDetalle}
               inputName={"detalleDieta"}

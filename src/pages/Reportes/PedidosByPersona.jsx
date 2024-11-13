@@ -28,7 +28,7 @@ export const PedidosByPersona = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
+        <div className="p-4 mx-4">
             <h1 className="text-center text-4xl font-bold mb-4 text-dark">Mis pedidos</h1>
             <table className="table border text-center">
                 <thead className="border-b bg-blue-900 rounded-2xl">

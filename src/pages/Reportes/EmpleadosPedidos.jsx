@@ -3,16 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { getEmpleadosPedidosApiCall } from "../../db/reportesApiCall";
 
 export const EmpleadosPedidos = () => {
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const [pedidos, setPedidos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [filters, setFilters] = useState({
+        fechaInicio: '',
+        fechaFin: ''
+    });
+    const [filteredPedidos, setFilteredPedidos] = useState([]);
 
     useEffect(() => {
         const fetchPedidos = async () => {
             try {
                 const response = await getEmpleadosPedidosApiCall();
-                setPedidos(response.data); 
+                setPedidos(response.data);
+                setFilteredPedidos(response.data);
                 setLoading(false);
             } catch (error) {
                 setError(error.message);
@@ -23,12 +29,63 @@ export const EmpleadosPedidos = () => {
         fetchPedidos();
     }, []);
 
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        const newFilters = { ...filters, [name]: value };
+        setFilters(newFilters);
+
+        const filtered = pedidos.filter(pedido =>
+            (!newFilters.fechaInicio || new Date(pedido.fechaPedido) >= new Date(newFilters.fechaInicio)) &&
+            (!newFilters.fechaFin || new Date(pedido.fechaPedido) <= new Date(newFilters.fechaFin))
+        );
+
+        setFilteredPedidos(filtered);
+    };
+
+    const clearFilters = () => {
+        setFilters({
+            fechaInicio: '',
+            fechaFin: ''
+        });
+        setFilteredPedidos(pedidos);
+    };
+
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
+        <div className="p-4 mx-4">
             <h1 className="text-center text-4xl font-bold mb-4 text-dark">Pedidos en cuenta corriente</h1>
+
+            <div className="flex space-x-4 mb-4">
+                <div>
+                    <label className="block text-gray-700 font-semibold mb-2">Fecha de inicio</label>
+                    <input
+                        type="date"
+                        name="fechaInicio"
+                        value={filters.fechaInicio}
+                        onChange={handleFilterChange}
+                        className="border p-2 rounded-md"
+                    />
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-semibold mb-2">Fecha de fin</label>
+                    <input
+                        type="date"
+                        name="fechaFin"
+                        value={filters.fechaFin}
+                        onChange={handleFilterChange}
+                        className="border p-2 rounded-md"
+                    />
+                </div>
+                <button
+                    onClick={clearFilters}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md self-end mt-6"
+                >
+                    Borrar Filtros
+                </button>
+            </div>
+
             <table className="table border text-center">
                 <thead className="border-b bg-blue-900 rounded-2xl">
                     <tr>
@@ -44,7 +101,7 @@ export const EmpleadosPedidos = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {pedidos.map((pedido) => (
+                    {filteredPedidos.map((pedido) => (
                         <tr className="bg-white border-b" key={pedido.pedidoId}>
                             <td className="text-md text-gray-900 px-6 py-4 whitespace-nowrap font-bold">{pedido.pedidoId}</td>
                             <td className="text-md text-gray-900 px-6 py-4 whitespace-nowrap font-bold">{pedido.nombre}</td>
@@ -59,8 +116,9 @@ export const EmpleadosPedidos = () => {
                     ))}
                 </tbody>
             </table>
-            <button 
-                onClick={() => navigate("/pedidos")} 
+
+            <button
+                onClick={() => navigate("/pedidos")}
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
             >
                 Volver a Pedidos

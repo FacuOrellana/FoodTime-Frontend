@@ -143,7 +143,7 @@ export const EditarDieta = () => {
           </div>
           <div className="col-6">
             <TextInput
-              inputTitle={"Detalle"}
+              inputTitle={"Detalles"}
               value={detalles}
               setValue={setDetalles}
               inputName={"detalleDieta"}
