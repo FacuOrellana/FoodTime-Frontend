@@ -86,8 +86,7 @@ export const recuperarContraseñaApiCall = async (email) => {
         nuevaContraseña: nuevaContraseña
       }, {
         headers: { 'Content-Type': 'application/json' }
-      });
-  
+      });  
       return response;
     } catch (error) {
       throw error;

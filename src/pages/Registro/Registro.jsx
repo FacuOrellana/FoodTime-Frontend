@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DateInput } from "../../components/Inputs";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-import {createNewUserApiCall} from '../../db/usuariosApiCall'
+import { createNewUserApiCall } from '../../db/usuariosApiCall'
 
 const getTodayDate = () => {
   const today = new Date();
@@ -36,10 +36,54 @@ export default function Registro() {
   const handleCrearUsuario = (e) => {
     e.preventDefault();
 
+    // Definir criterios de validación
+    const longitudMinima = 8;
+    const regexMayuscula = /[A-Z]/; // Al menos una letra mayúscula
+    const regexSimbolo = /[!@#$%^&*(),.?":{}|<>]/; // Al menos un símbolo
+
+    // Almacenar mensajes de error específicos
+    const errores = [];
+
+    if (password.length < longitudMinima) {
+        errores.push(`La contraseña debe tener al menos ${longitudMinima} caracteres.`);
+    }
+
+    if (!regexMayuscula.test(password)) {
+        errores.push('La contraseña debe incluir al menos una letra mayúscula.');
+    }
+
+    if (!regexSimbolo.test(password)) {
+        errores.push('La contraseña debe incluir al menos un símbolo (por ejemplo: !, @, #, $, etc.).');
+    }
+
+    if (password !== repetirPassword) {
+        errores.push('Las contraseñas no coinciden.');
+    }
+
+    // Si hay errores, mostrarlos en un cuadro de alerta y detener la ejecución
+    if (errores.length > 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            html: errores.join('<br>'), // Muestra los errores en líneas separadas
+        });
+        return;
+    }
+
+    if (password !== repetirPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Las contraseñas no coinciden.',
+      });
+      return;
+    }
+
+
     let fechaFormateada = fechaNacimiento.split("-").reverse().join("-");
 
     const personaDto = {
-      id:null,
+      id: null,
       dni,
       nombre,
       email,
@@ -49,28 +93,44 @@ export default function Registro() {
     };
 
     const usuarioDto = {
-      id:null,
+      id: null,
       email,
       tipoUsuario: "PACIENTE",
       personaDto: personaDto,
       password
     };
-    
-    email !== "" &&
-    password !== "" &&
-    dni !== "" &&
-    nombre !== "" &&
-    apellido !== "" &&
-    telefono !== "" &&
-    direccion !== "" &&
-    fechaNacimiento < getTodayDate() 
-      ? createNewUserApiCall(usuarioDto) //llamado a la api con el usuario
-      : getUserErrorMsg("registro"); //mostrar cartel de error en el registro
 
-      console.log(usuarioDto);
+    if (
+      email !== "" &&
+      password !== "" &&
+      dni !== "" &&
+      nombre !== "" &&
+      apellido !== "" &&
+      telefono !== "" &&
+      direccion !== "" &&
+      fechaNacimiento < getTodayDate()
+    ) {
+      createNewUserApiCall(usuarioDto)
+        .then(response => {
+          console.log(response);
 
-      navigate("/"); //al final vuelvo a la ventana de login
+          Swal.fire({
+            icon: 'success',
+            title: 'Registro exitoso!',
+            text: 'Tu cuenta se creó exitosamente, por favor revisa tu correo: ' + email,
+          });
+           navigate("/");
+        })
+        .catch(error => {
+          console.error('Error al crear el usuario:', error);
 
+          Swal.fire({
+            icon: 'error',
+            title: 'Error en el registro',
+            text: error.response?.data || 'Algo salió mal. Intenta nuevamente más tarde.',
+          });
+        });
+    }
   };
 
   const navigateToLogin = () => {
