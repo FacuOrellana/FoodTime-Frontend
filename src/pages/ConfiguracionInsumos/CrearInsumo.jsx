@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { NumberInput, SelectInput, TextInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
 import { getInsumoConfirmacionMsg, getInsumoErrorMsg } from "../../utils/messages";
+import { unidadesOptions } from "../../utils/options";
 
 export const CrearInsumo = () => {
   /* STATES FOR THE INPUTS */
@@ -53,10 +54,11 @@ export const CrearInsumo = () => {
               col={12}
               marginT={"mt-0"}
             />
-            <TextInput
+            <SelectInput
               inputTitle={"Unidad"}
               value={unidad}
               setValue={setUnidad}
+              dataOptions={unidadesOptions}
               inputName={"unidadInsumo"}
               col={12}
               marginT={"mt-4"}

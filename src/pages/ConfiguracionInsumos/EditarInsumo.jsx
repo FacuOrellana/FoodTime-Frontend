@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { NumberInput, TextInput } from "../../components/Inputs";
+import { NumberInput, TextInput, SelectInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
 import { getInsumoApiCall } from "../../db/InsumoApiCall";
 import {
@@ -8,6 +8,7 @@ import {
   getInsumoErrorMsg,
 } from "../../utils/messages";
 import { useNavigate } from "react-router-dom";
+import { unidadesOptions } from "../../utils/options";
 
 export const EditarInsumo = () => {
   const { id } = useParams(); // Obtenemos el id del menú desde los parámetros de la URL
@@ -70,10 +71,11 @@ export const EditarInsumo = () => {
               col={12}
               marginT={"mt-0"}
             />
-            <TextInput
+            <SelectInput
               inputTitle={"Unidad"}
               value={unidad}
               setValue={setUnidad}
+              dataOptions={unidadesOptions}
               inputName={"unidadInsumo"}
               col={12}
               marginT={"mt-4"}

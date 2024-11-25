@@ -66,3 +66,56 @@ export const tipoUsuariosOptions = [
         value: 'DIRECTIVO'
     }
 ];
+
+export const unidadesOptions = [
+    {
+        id: 0,
+        name: 'Gramos',
+        value: 'Gramos',
+    },
+    {
+        id: 1,
+        name: 'Kilogramos',
+        value: 'Kilogramos',
+    },
+    {
+        id: 2,
+        name: 'Mililitros',
+        value: 'Mililitros',
+    },
+    {
+        id: 3,
+        name: 'Litros',
+        value: 'Litros',
+    },
+    {
+        id: 4,
+        name: 'Bulto',
+        value: 'Bulto',
+    },
+    {
+        id: 5,
+        name: 'Paquete',
+        value: 'Paquete',
+    },
+    {
+        id: 6,
+        name: 'Unidad',
+        value: 'Unidad',
+    },
+    {
+        id: 7,
+        name: 'Libra',
+        value: 'Libra',
+    },
+    {
+        id: 8,
+        name: 'Centímetro cúbico',
+        value: 'Centímetro cúbico',
+    },
+    {
+        id: 9,
+        name: 'Onza',
+        value: 'Onza',
+    }
+];
