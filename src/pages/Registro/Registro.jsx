@@ -45,29 +45,29 @@ export default function Registro() {
     const errores = [];
 
     if (password.length < longitudMinima) {
-        errores.push(`La contraseña debe tener al menos ${longitudMinima} caracteres.`);
+      errores.push(`La contraseña debe tener al menos ${longitudMinima} caracteres.`);
     }
 
     if (!regexMayuscula.test(password)) {
-        errores.push('La contraseña debe incluir al menos una letra mayúscula.');
+      errores.push('La contraseña debe incluir al menos una letra mayúscula.');
     }
 
     if (!regexSimbolo.test(password)) {
-        errores.push('La contraseña debe incluir al menos un símbolo (por ejemplo: !, @, #, $, etc.).');
+      errores.push('La contraseña debe incluir al menos un símbolo (por ejemplo: !, @, #, $, etc.).');
     }
 
     if (password !== repetirPassword) {
-        errores.push('Las contraseñas no coinciden.');
+      errores.push('Las contraseñas no coinciden.');
     }
 
     // Si hay errores, mostrarlos en un cuadro de alerta y detener la ejecución
     if (errores.length > 0) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            html: errores.join('<br>'), // Muestra los errores en líneas separadas
-        });
-        return;
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        html: errores.join('<br>'), // Muestra los errores en líneas separadas
+      });
+      return;
     }
 
     if (password !== repetirPassword) {
@@ -119,7 +119,7 @@ export default function Registro() {
             title: 'Registro exitoso!',
             text: 'Tu cuenta se creó exitosamente, por favor revisa tu correo: ' + email,
           });
-           navigate("/");
+          navigate("/");
         })
         .catch(error => {
           console.error('Error al crear el usuario:', error);
@@ -185,9 +185,16 @@ export default function Registro() {
               </label>
               <input
                 name="nombre"
+                type="text"
                 placeholder="Nombre"
                 value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Permitir solo letras y espacios
+                  if (/^[a-zA-Z\s]*$/.test(value)) {
+                    setNombre(value);
+                  }
+                }}
                 className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]"
               />
             </div>
@@ -201,12 +208,20 @@ export default function Registro() {
               </label>
               <input
                 name="apellido"
+                type="text"
                 placeholder="Apellido"
                 value={apellido}
-                onChange={(e) => setApellido(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Permitir solo letras y espacios
+                  if (/^[a-zA-Z\s]*$/.test(value)) {
+                    setApellido(value);
+                  }
+                }}
                 className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]"
               />
             </div>
+
 
             <div className="mt-4">
               <label
@@ -216,13 +231,19 @@ export default function Registro() {
                 DNI
               </label>
               <input
+                type="number" // Permite solo números
                 name="dni"
                 placeholder="DNI"
                 value={dni}
-                onChange={(e) => setDni(e.target.value)}
+                onChange={(e) => {
+                  // Filtra caracteres no válidos
+                  const numericValue = e.target.value.replace(/\D/g, ''); // Elimina todo excepto dígitos
+                  setDni(numericValue); // Actualiza el estado solo con valores numéricos
+                }}
                 className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]"
               />
             </div>
+
 
             <div className="mt-4">
               <label
@@ -326,8 +347,13 @@ export default function Registro() {
               <input
                 name="telefono"
                 placeholder="Telefono"
+                type="number"
                 value={telefono}
-                onChange={(e) => setTelefono(e.target.value)}
+                onChange={(e) => {
+                  // Filtra caracteres no válidos
+                  const numericValue = e.target.value.replace(/\D/g, ''); // Elimina todo excepto dígitos
+                  setTelefono(numericValue); // Actualiza el estado solo con valores numéricos
+                }}
                 className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#f84525]"
               />
             </div>

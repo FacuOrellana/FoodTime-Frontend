@@ -108,18 +108,27 @@ export const EditarMenu = () => {
           <div className='col-6'>
             <TextInput inputTitle={'Titulo'} value={titulo} setValue={setTitulo} inputName={'tituloMenu'} col={12} marginT={'mt-0'} />
             <TextInput inputTitle={'Descripcion'} value={descripcion} setValue={setDescripcion} inputName={'descripcionMenu'} col={12} marginT={'mt-4'} />
-            <TextInput
-              inputTitle={'Precio'}
-              inputName={'precioMenu'}
-              placeholder={'$'}
-              col={12}
-              marginT={'mt-4'}
-              value={precio}
-              setValue={setPrecio}
-              keyPressEvent={(event) => {
-                if (!/[0-9.]/.test(event.key)) event.preventDefault();
-              }}
-            />
+            <div className="mt-4 col-12">
+              <label className="text-gray-100 text-lg mb-1">Precio</label>
+              <input
+                type="text"
+                name="precioMenu"
+                placeholder="$"
+                className="form-control required dni center-block"
+                value={precio}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^\d*$/.test(value)) {
+                    setPrecio(value);
+                  }
+                }}
+                onKeyPress={(event) => {
+                  if (!/^[0-9]$/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+              />
+            </div>
           </div>
           <div className='col-6'>
             <SelectInput
@@ -132,106 +141,106 @@ export const EditarMenu = () => {
               marginT={'mt-0'}
             />
             <SelectInput inputTitle={'Tipo'} value={tipoOptions} setValue={setTipoOptions} dataOptions={tipoMenuOptions} inputName={'tipoOptionsMenu'} col={12} marginT={'mt-4'} />
-                    
+
           </div>
         </div>
       </div>
       <div className="bg-gray-800 mt-10 rounded-lg p-4">
-              <div className="row">
-                <div className="col-md-6">
-                  <SelectInput
-                    inputTitle={"Seleccionar Insumo"}
-                    value={selectedInsumoId}
-                    setValue={setSelectedInsumoId}
-                    dataOptions={insumos}
-                    inputName={"insumoSelect"}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <TextInput
-                    inputTitle={"Cantidad"}
-                    value={cantidadInsumo}
-                    setValue={setCantidadInsumo}
-                    inputName={"cantidadInsumo"}
-                    placeholder={"Cantidad"}
-                    col={12}
-                    marginT={"mt-0"}
-                    keyPressEvent={(event) => {
-                      if (!/[0-9]/.test(event.key)) {
-                        event.preventDefault();
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-              <button
-                className="mt-4 bg-green-600 text-gray-100 p-2 rounded-lg"
-                onClick={agregarInsumo}
-              >
-                Agregar Insumo
-              </button>
+        <div className="row">
+          <div className="col-md-6">
+            <SelectInput
+              inputTitle={"Seleccionar Insumo"}
+              value={selectedInsumoId}
+              setValue={setSelectedInsumoId}
+              dataOptions={insumos}
+              inputName={"insumoSelect"}
+            />
+          </div>
+          <div className="col-md-6">
+            <TextInput
+              inputTitle={"Cantidad"}
+              value={cantidadInsumo}
+              setValue={setCantidadInsumo}
+              inputName={"cantidadInsumo"}
+              placeholder={"Cantidad"}
+              col={12}
+              marginT={"mt-0"}
+              keyPressEvent={(event) => {
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
+            />
+          </div>
+        </div>
+        <button
+          className="mt-4 bg-green-600 text-gray-100 p-2 rounded-lg"
+          onClick={agregarInsumo}
+        >
+          Agregar Insumo
+        </button>
 
-              <div className="mt-4">
-                <h4 className="text-gray-300 text-md">Insumos Agregados:</h4>
-                {menuInsumo.length === 0 ? (
-                  <p className="text-gray-500">No se han agregado insumos.</p>
-                ) : (
-                  <ul className="list-disc list-inside">
-                    <div className="flex justify-center mt-4">
-                      <div className="w-full max-w-2xl">
-                        <table className="w-full border-collapse bg-gray-800 rounded-lg overflow-hidden">
-                          <thead>
-                            <tr className="text-gray-300 bg-gray-700">
-                              <th className="border-b border-gray-600 p-2 text-left">Insumo</th>
-                              <th className="border-b border-gray-600 p-2 text-left">Cantidad</th>
-                              <th className="border-b border-gray-600 p-2 text-left">Acciones</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {menuInsumo.map((insumo, index) => {
-                              const insumoData = insumos.find(
-                                (item) => item.id === parseInt(insumo.insumoId)
-                              );
-                              return (
-                                <tr key={index} className="text-gray-300">
-                                  <td className="border-b border-gray-600 p-2">
-                                    {insumoData ? insumoData.name : "Insumo no encontrado"}
-                                  </td>
-                                  <td className="border-b border-gray-600 p-2">{insumo.cantidad}</td>
-                                  <td className="border-b border-gray-600 p-2">
-                                    <button
-                                      onClick={() => handleEliminarInsumo(index)}
-                                      className="bg-red-600 text-gray-100 px-2 py-1 rounded hover:bg-red-700 transition"
-                                    >
-                                      Eliminar
-                                    </button>
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </ul>
-                )}
+        <div className="mt-4">
+          <h4 className="text-gray-300 text-md">Insumos Agregados:</h4>
+          {menuInsumo.length === 0 ? (
+            <p className="text-gray-500">No se han agregado insumos.</p>
+          ) : (
+            <ul className="list-disc list-inside">
+              <div className="flex justify-center mt-4">
+                <div className="w-full max-w-2xl">
+                  <table className="w-full border-collapse bg-gray-800 rounded-lg overflow-hidden">
+                    <thead>
+                      <tr className="text-gray-300 bg-gray-700">
+                        <th className="border-b border-gray-600 p-2 text-left">Insumo</th>
+                        <th className="border-b border-gray-600 p-2 text-left">Cantidad</th>
+                        <th className="border-b border-gray-600 p-2 text-left">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {menuInsumo.map((insumo, index) => {
+                        const insumoData = insumos.find(
+                          (item) => item.id === parseInt(insumo.insumoId)
+                        );
+                        return (
+                          <tr key={index} className="text-gray-300">
+                            <td className="border-b border-gray-600 p-2">
+                              {insumoData ? insumoData.name : "Insumo no encontrado"}
+                            </td>
+                            <td className="border-b border-gray-600 p-2">{insumo.cantidad}</td>
+                            <td className="border-b border-gray-600 p-2">
+                              <button
+                                onClick={() => handleEliminarInsumo(index)}
+                                className="bg-red-600 text-gray-100 px-2 py-1 rounded hover:bg-red-700 transition"
+                              >
+                                Eliminar
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>  
-      
+            </ul>
+          )}
+        </div>
+      </div>
+
       <div className="flex justify-center mt-10">
-              <Link
-                to={"/GestionarMenus"}
-                className="text-center w-48 bg-red-400 text-gray-100 p-3 rounded-lg hover:bg-orange-500 hover:text-gray-900"
-              >
-                <span className="text-xl">Cancelar</span>
-              </Link>
-              <button
-                onClick={editMenu}
-                className="ml-4 text-center w-48 bg-green-600 text-gray-100 p-3 rounded-lg hover:bg-green-700"
-              >
-                <span className="text-xl">Editar Menu</span>
-              </button>
-            </div>
+        <Link
+          to={"/GestionarMenus"}
+          className="text-center w-48 bg-red-400 text-gray-100 p-3 rounded-lg hover:bg-orange-500 hover:text-gray-900"
+        >
+          <span className="text-xl">Cancelar</span>
+        </Link>
+        <button
+          onClick={editMenu}
+          className="ml-4 text-center w-48 bg-green-600 text-gray-100 p-3 rounded-lg hover:bg-green-700"
+        >
+          <span className="text-xl">Editar Menu</span>
+        </button>
+      </div>
     </section>
   );
 };

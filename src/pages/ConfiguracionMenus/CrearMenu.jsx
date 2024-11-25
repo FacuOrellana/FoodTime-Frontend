@@ -107,20 +107,31 @@ export const CrearMenu = () => {
               col={12}
               marginT={"mt-4"}
             />
-            <TextInput
-              inputTitle={"Precio"}
-              inputName={"precioMenu"}
-              placeholder={"$"}
-              col={12}
-              marginT={"mt-4"}
-              value={precio}
-              setValue={setPrecio}
-              keyPressEvent={(event) => {
-                if (!/[0-9]/.test(event.key) && !/[.]/.test(event.key)) {
-                  event.preventDefault();
-                }
-              }}
-            />
+            <div className="mt-4 col-12">
+              <label className="text-gray-100 text-lg mb-1">Precio</label>
+              <input
+                type="text"
+                name="precioMenu"
+                placeholder="$"
+                className="form-control required dni center-block"
+                value={precio}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Permitir solo números enteros positivos
+                  if (/^\d*$/.test(value)) {
+                    setPrecio(value);
+                  }
+                }}
+                onKeyPress={(event) => {
+                  // Permitir solo números
+                  if (!/^[0-9]$/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+              />
+            </div>
+
+
           </div>
 
           <div className="col-6">

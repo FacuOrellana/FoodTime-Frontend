@@ -33,9 +33,13 @@ export const PedidosByDni = () => {
             
             <form onSubmit={handleSearch} className="flex items-center justify-center mb-4">
                 <input
-                    type="text"
+                    type="number"
                     value={dni}
-                    onChange={(e) => setDni(e.target.value)}
+                    onChange={(e) => {
+                        // Filtra caracteres no válidos
+                        const numericValue = e.target.value.replace(/\D/g, ''); // Elimina todo excepto dígitos
+                        setDni(numericValue); // Actualiza el estado solo con valores numéricos
+                      }}
                     placeholder="Ingrese DNI"
                     className="border p-2 mr-2 rounded-lg"
                 />

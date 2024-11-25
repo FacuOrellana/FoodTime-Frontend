@@ -233,10 +233,14 @@ export const Carrito = ({ history }) => {
           <div>
             <label className="block text-gray-700 font-medium mb-2">DNI:</label>
             <input
-              type="text"
+              type="number"
               className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
               value={dni}
-              onChange={(e) => setDni(e.target.value)}
+              onChange={(e) => {
+                // Filtra caracteres no válidos
+                const numericValue = e.target.value.replace(/\D/g, ''); // Elimina todo excepto dígitos
+                setDni(numericValue); // Actualiza el estado solo con valores numéricos
+              }}
             />
           </div>
           <div>
@@ -251,10 +255,14 @@ export const Carrito = ({ history }) => {
           <div>
             <label className="block text-gray-700 font-medium mb-2">Número de Teléfono:</label>
             <input
-              type="text"
+              type="number"
               className="w-full border border-gray-300 bg-white rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 shadow-sm"
               value={numeroTelefono}
-              onChange={(e) => setNumeroTelefono(e.target.value)}
+              onChange={(e) => {
+                // Filtra caracteres no válidos
+                const numericValue = e.target.value.replace(/\D/g, ''); // Elimina todo excepto dígitos
+                setDni(numericValue); // Actualiza el estado solo con valores numéricos
+              }}
             />
           </div>
         </div>

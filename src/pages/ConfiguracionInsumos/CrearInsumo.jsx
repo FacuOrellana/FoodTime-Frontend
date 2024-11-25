@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { SelectInput, TextInput } from "../../components/Inputs";
+import { NumberInput, SelectInput, TextInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
 import { getInsumoConfirmacionMsg, getInsumoErrorMsg } from "../../utils/messages";
 
@@ -63,7 +63,7 @@ export const CrearInsumo = () => {
             />
           </div>
           <div className="col-6">
-          <TextInput
+          <NumberInput
               inputTitle={"Precio"}
               inputName={"precioInsumo"}
               placeholder={"$"}

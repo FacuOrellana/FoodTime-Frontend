@@ -1,6 +1,6 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { SelectInput, TextInput, DateInput, EmailInput, PasswordInput } from "../../components/Inputs";
+import { SelectInput, TextInput, DateInput, EmailInput, PasswordInput, NumberInput, GenericInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
 import { getUserConfirmacionMsg, getUserErrorMsg } from "../../utils/messages";
 import { tipoUsuariosOptions } from "../../utils/options";
@@ -24,7 +24,7 @@ export const CrearUsuario = () => {
   };
 
   const crearUsuario = () => {
-    
+
     let fechaFormateada = fechaNacimiento.split("-").reverse().join("-");
 
     const personaDto = {
@@ -45,14 +45,14 @@ export const CrearUsuario = () => {
     };
 
     email !== "" &&
-    password !== "" &&
-    tipoUsuario !== "" &&
-    dni !== "" &&
-    nombre !== "" &&
-    apellido !== "" &&
-    numeroTelefono !== "" &&
-    direccion !== "" &&
-    fechaNacimiento < getTodayDate() 
+      password !== "" &&
+      tipoUsuario !== "" &&
+      dni !== "" &&
+      nombre !== "" &&
+      apellido !== "" &&
+      numeroTelefono !== "" &&
+      direccion !== "" &&
+      fechaNacimiento < getTodayDate()
       ? getUserConfirmacionMsg(user)
       : getUserErrorMsg("Creacion");
   };
@@ -84,7 +84,7 @@ export const CrearUsuario = () => {
               col={12}
               marginT={"mt-4"}
             />
-            <TextInput
+            <NumberInput
               inputTitle={"DNI"}
               value={dni}
               setValue={setDni}
@@ -93,24 +93,24 @@ export const CrearUsuario = () => {
               marginT={"mt-4"}
             />
             <EmailInput
-                inputTitle={"Email"}
-                value={email}
-                setValue={setEmail}
-                inputName={"emailUser"}
-                col={12}
-                marginT={"mt-4"}
-              />
+              inputTitle={"Email"}
+              value={email}
+              setValue={setEmail}
+              inputName={"emailUser"}
+              col={12}
+              marginT={"mt-4"}
+            />
             <PasswordInput
-                inputTitle={"Contraseña"}
-                value={password}
-                setValue={setPassword}
-                inputName={"passwordUser"}
-                col={12}
-                marginT={"mt-4"}
-              />
+              inputTitle={"Contraseña"}
+              value={password}
+              setValue={setPassword}
+              inputName={"passwordUser"}
+              col={12}
+              marginT={"mt-4"}
+            />
           </div>
           <div className="col-6">
-          <SelectInput
+            <SelectInput
               inputTitle={"Tipo de Usuario"}
               value={tipoUsuario}
               setValue={setTipoUsuario}
@@ -121,16 +121,16 @@ export const CrearUsuario = () => {
             />
 
             <DateInput
-                inputTitle={"Fecha de Nacimiento"}
-                value={fechaNacimiento}
-                setValue={setFechaNacimiento}
-                inputName={"fechaNacimientoUser"}
-                col={12}
-                marginT={"mt-4"}
-                today={getTodayDate()}
-              />
+              inputTitle={"Fecha de Nacimiento"}
+              value={fechaNacimiento}
+              setValue={setFechaNacimiento}
+              inputName={"fechaNacimientoUser"}
+              col={12}
+              marginT={"mt-4"}
+              today={getTodayDate()}
+            />
 
-            <TextInput
+            <NumberInput
               inputTitle={"Celular"}
               value={numeroTelefono}
               setValue={setNumeroTelefono}
@@ -139,14 +139,23 @@ export const CrearUsuario = () => {
               marginT={"mt-4"}
             />
 
-            <TextInput
+            <GenericInput
               inputTitle={"Direccion"}
               value={direccion}
               setValue={setDireccion}
               inputName={"direccionUser"}
               col={12}
               marginT={"mt-4"}
+              keyPressEvent={(e) => {
+                // Permitir cualquier carácter, no se bloquea ninguna tecla
+              }}
+              onChange={(e) => {
+                // Aceptar cualquier valor ingresado en el campo
+                setDireccion(e.target.value);
+              }}
             />
+
+
 
             <div className="flex justify-center mt-10">
               <Link
@@ -158,12 +167,12 @@ export const CrearUsuario = () => {
               <Link
                 to={"/GestionarUsuarios"}
               >
-              <button
-                className="w-48 bg-blue-600 text-gray-100 p-3 rounded-lg hover:bg-teal-400 hover:text-gray-900 ml-10"
-                onClick={crearUsuario}
-              >
-                <span className=" text-xl">Agregar Usuario</span>
-              </button>
+                <button
+                  className="w-48 bg-blue-600 text-gray-100 p-3 rounded-lg hover:bg-teal-400 hover:text-gray-900 ml-10"
+                  onClick={crearUsuario}
+                >
+                  <span className=" text-xl">Agregar Usuario</span>
+                </button>
               </Link>
             </div>
           </div>

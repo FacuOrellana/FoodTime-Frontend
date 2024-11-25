@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { DateInputMin, SelectInput, TextInput, } from "../../components/Inputs";
+import { DateInputMin, GenericInput, SelectInput, TextInput, } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
 import { getDietaConfirmacionMsg, getDietaErrorMsg, } from "../../utils/messages";
 import { getAllMenusApiCall } from "../../db/MenusApiCall";
@@ -107,7 +107,7 @@ export const CrearDieta = () => {
             />
           </div>
           <div className="col-6">
-            <TextInput
+            <GenericInput
               inputTitle={"Detalles"}
               value={detalles}
               setValue={setDetalle}

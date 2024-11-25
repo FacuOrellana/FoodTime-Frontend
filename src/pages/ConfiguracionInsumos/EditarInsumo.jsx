@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { TextInput } from "../../components/Inputs";
+import { NumberInput, TextInput } from "../../components/Inputs";
 import { PageTitles } from "../../components/PageTitles/PageTitles";
 import { getInsumoApiCall } from "../../db/InsumoApiCall";
 import {
@@ -80,7 +80,7 @@ export const EditarInsumo = () => {
             />
           </div>
           <div className="col-6">
-            <TextInput
+            <NumberInput
               inputTitle={"Precio"}
               inputName={"precioInsumo"}
               placeholder={"$"}

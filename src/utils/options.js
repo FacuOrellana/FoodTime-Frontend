@@ -59,5 +59,10 @@ export const tipoUsuariosOptions = [
         id: 6,
         name: 'Cocina',
         value: 'COCINA'
+    },
+    {
+        id: 7,
+        name: 'Directivo',
+        value: 'DIRECTIVO'
     }
 ];
